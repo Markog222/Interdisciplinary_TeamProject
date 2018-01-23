@@ -5,16 +5,14 @@ var https = require('https'),
     ejs = require('ejs');
 
 var app = express();
-var db = require('./custom_modules/db');
 app.set('view engine','ejs')
 app.use(express.static(__dirname + '/views'));
 
 app.get('/',function(req,res){
 
-    db.select();
     res.render('index');
 
 });
 
-app.listen(3000);
-console.log('running at Port 3000');
+app.listen(5000);
+console.log('running at Port 5000');
