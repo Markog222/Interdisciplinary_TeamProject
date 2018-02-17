@@ -1,0 +1,3 @@
+# google drive auth
+index.html = Upload & display of images
+gslides.html = Upload & display of google slides
