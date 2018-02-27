@@ -33,7 +33,7 @@ function slide(url, target){
 	$target.css('width','auto');
 	$target.css('height','auto');
 	var $widget = $('<iframe id="display" src="https://docs.google.com/presentation/d/13vsbKgIg2bsd21RXIVwcjSFC6Am-vm42Z5XshNAha9I/preview?start=true&loop=false&delayms=3000"'
-	+'frameborder="0" width="500" height="291"	allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>');
+	+'frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>');
 
 	$target.append($widget);
 

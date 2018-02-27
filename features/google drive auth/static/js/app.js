@@ -64,43 +64,28 @@ function addNew(type, url){
 			try{
 				$count++;
 				var $pos=$('#new_div').position();
-				/*var $new = $('<div class="new_div">'
-				+'<div class="chart_div"></div><div id="target2"></div></div>');*/
 				var $new = $('<div class="new_div">'
 				+'<div id="target2"></div></div>');
 				if(type=='video') {
 					//Get user input for this
 					$new = youtube($src,$new);
-
 				} else if (type=='image'){
-					console.log('image1');
 					$new = picture($src,$new);
-					console.log($new);
 				} else if(type=='slide'){
 					$new = slide($src,$new);
 				}
 
-				console.log($new);
-
-
 				$new.css($pos);
 				$new.resizable();
-				//$new.resizable({alsoResize:'.new_div iframe'});
 				$new.draggable();
 				$new.rotatable();
-				$new.append("<div id='drag_icon'></div>")
+				$new.append("<div id='drag_icon'></div>");
 				$('#kanvass').append($new);
 				$('#new_div').remove();
 				$('#kanvass').off();
 				$(document).off();
 				radialBtn();
 
-				/*
-				$('div[class*=new_div]').on('dblclick',()=>{
-
-					drawChart();
-				});*/
-				//$new.css('relative','absolute !important');
 			} catch(e) {
 				console.log(e);
 			}
@@ -140,14 +125,17 @@ function radialBtn(){
 		e.preventDefault();
 		var $class = $(this).attr('class');
 		if($class.indexOf('video') !== -1){
-				addNew('video','https://www.youtube.com/embed/ic03Af0oWo0');
+				var $tmp_url = "";
+				$tmp_url = prompt('Please enter the URL of the video you want to add');
+				if($tmp_url !== "") {
+					var $urlId = $tmp_url.replace("https://www.youtube.com/watch?v=","");
+					addNew('video','https://www.youtube.com/embed/'+$urlId);
+				}
 		} else if ($class.indexOf('image') !== -1){
 			console.log($class);
 			$google_type = 'image';
 		} else if ($class.indexOf('slide') !== -1){
-			console.log($class);
 			$google_type = 'slide';
-			console.log($google_type);
 		}
 
 		$('.circle').toggleClass('open');
