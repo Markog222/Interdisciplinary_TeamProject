@@ -6,4 +6,17 @@
     background-size: 100%;
     left: 2px;
     bottom: 2px;
+    display:inline-block;
+}
+
+#drag_icon {
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-image: url(drag.png);
+  background-size: 100%;
+  background-size: 100%;
+  left: 18px;
+  bottom: 2px;
+  display:inline-block;
 }

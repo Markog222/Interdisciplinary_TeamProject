@@ -1,4 +1,5 @@
 .circular-menu {
+  z-index:9999;
   width: 350px;
   height: 350px;
   position: relative;

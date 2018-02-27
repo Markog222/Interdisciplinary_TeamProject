@@ -8,7 +8,7 @@
     <script type="text/javascript">
 
 		//Google People & Drive API has to be enabled on the developer console for this to work
-		
+
       // The Browser API key obtained from the Google API Console.
       var developerKey = 'AIzaSyDUyxq1lFFP5dQ9wlnIdota6uTKK8zN3Lo';
 
@@ -66,21 +66,21 @@
           picker.setVisible(true);
         }
       }
-	  
+
 	  function shareSuccess(res){
 		console.log(res)
 	  }
-	  
+
 	  function shareFile(fileId, callback) {
 	   var url = 'https://www.googleapis.com/drive/v3/files/'+fileId+'/permissions'
 		  if (fileId) {
-			
+
 			var permissions = {
 				  "type":"anyone",
 				  "role":"reader",
 				  "published":true
 			   };
-			  
+
 			  var params = JSON.stringify(permissions);
 		  // https://stackoverflow.com/questions/32322772/google-drive-api-changing-owner-of-a-file-permissions-error-400-permission
 			//console.log(oauthToken);
@@ -94,7 +94,7 @@
 			xhr.onerror = function() {
 			  callback(null);
 			};
-			/*xhr.send(JSON.stringify({  
+			/*xhr.send(JSON.stringify({
 				  "type":"anyone",
 				  "role":"reader"
 			   }));*/
@@ -103,7 +103,7 @@
 			callback(null);
 		  }
 		}
-	
+
       // A simple callback implementation.
       function pickerCallback(data) {
         var url = 'nothing';
@@ -116,7 +116,7 @@
 		  var url = 'https://docs.google.com/presentation/d/'+fileId+'/preview?start=true&loop=false&delayms=200';
 		  shareFile(fileId, shareSuccess);
         }
-		
+
 		document.getElementById('display').src = url;
       }
     </script>
@@ -124,16 +124,16 @@
   <body>
   <h1>KANVASS</h1>
     <button type="button" id="auth" disabled>Authenticate</button>
-	
+
     <div id="result"></div>
 	<br /><br />
 	<div id="outImg"></div>
-	<iframe id="display" src="https://docs.google.com/presentation/d/13vsbKgIg2bsd21RXIVwcjSFC6Am-vm42Z5XshNAha9I/preview?start=true&loop=false&delayms=3000" 
-	frameborder="0" 
-	width="500" 
-	height="291" 
-	allowfullscreen="true" 
-	mozallowfullscreen="true" 
+	<iframe id="display" src="https://docs.google.com/presentation/d/13vsbKgIg2bsd21RXIVwcjSFC6Am-vm42Z5XshNAha9I/preview?start=true&loop=false&delayms=3000"
+	frameborder="0"
+	width="500"
+	height="291"
+	allowfullscreen="true"
+	mozallowfullscreen="true"
 	webkitallowfullscreen="true"></iframe>
     <!-- The Google API Loader script. -->
     <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
