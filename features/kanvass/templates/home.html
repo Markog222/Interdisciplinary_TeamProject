@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Kanvass Home</title>
+    <link href="/static/stylesheets/home.css" type="stylesheets" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          $('.kan-thumbnail-add').click(function(){
+              window.location.href="/create";
+          })
+      })
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            {% if not 'username' in session %}
+            <li role="presentation" class="active"data-toggle="modal" data-target="#myModal"><a href="{{ url_for('index') }}">Login</a></a></li>
+            {% else %}
+            <li role="presentation" class="active"><a href="">My Account</a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <!--
+            Original Tumbnail image
+            CC01 License (Free for personal or commercial use; no attribution required)
+            @reference: https://www.pexels.com/photo/art-artist-black-and-white-blank-265047/
+            @reference: https://pixabay.com/en/button-add-icon-web-symbol-304224/
+          -->
+          <h3>My Kanvasses</h3>
+          <ul id="kan-thumbs">
+            <li class="kan-thumbnail"><h4>Kanvass #1</h4></li>
+            <li class="kan-thumbnail"><h4>Kanvass #2</h4></li>
+            <li class="kan-thumbnail"><h4>Kanvass #3</h4></li>
+            <li class="kan-thumbnail-add"></li>
+          </ul>
+        </div>
+        <div class="col-lg-6 pull-left">
+          <h3>Shared Kanvasses</h3>
+          <li class="kan-thumbnail"><h4>Shared Kanvass #1</h4></li>
+          <li class="kan-thumbnail"><h4>Shared Kanvass #2</h4></li>
+
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+{% endblock %}

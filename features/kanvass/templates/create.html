@@ -2,18 +2,20 @@
 <html>
 	<head>
 		<title>Chop, Change and Do</title>
+
+		<!-- jQuery & jQuery UI libraries -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 		<!-- CSS -->
 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="/static/stylesheets/jquery.ui.rotatable.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 		<!-- Font Awesome Hosted Library -->
-        <!-- <script src="https://use.fontawesome.com/53ca39bee0.js"></script>-->
+    <!-- <script src="https://use.fontawesome.com/53ca39bee0.js"></script>-->
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
-		<!-- jQuery & jQuery UI libraries -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 		<!-- Load Google APIs -->
 		<script src="https://apis.google.com/js/api.js"></script>
 
@@ -22,7 +24,8 @@
 		<script type="text/javascript" src="/static/js/widgets.js"></script>
 		<script type="text/javascript" src="/static/js/chart.js"></script>
 		<script type="text/javascript" src="/static/js/googleAPIs.js"></script>
-		<script src="/static/js/app.js"></script>
+		<script src="/static/js/save.js"></script>
+		<script src="/static/js/create.js"></script>
 
 
 		<link rel="stylesheet" href="/static/stylesheets/styles.css">
@@ -36,10 +39,16 @@
 		<div id="kanvass">
 			<!--<button id="addBtn">Add</button>-->
 			<!-- reference:  http://creative-punch.net/2014/02/making-animated-radial-menu-css3-javascript/ -->
+
+			<!--
+					Buttons from creative commons - free for commerical use and no attribution required
+					@reference:  https://pixabay.com/en/icon-pack-package-icons-to-save-2129743/
+			-->
+
 			<nav class="circular-menu">
 
 			  <div class="circle">
-				<a href="" class="addBtn fas fa-video fa-2x"></a>
+				<a href="" class="addBtn fas fa-adjust fa-2x"></a>
 				<a href="" class="addBtn fab fa-facebook-f fa-2x"></a>
 				<a href="" class="addBtn fab fa-twitter fa-2x"></a>
 				<a href="" class="addBtn fas fa-file-pdf fa-2x"></a>
@@ -54,15 +63,16 @@
 				<a href="" class="addBtn fas fa-file-pdf fa-2x"></a>
 				<a href="" class="addBtn fab fa-facebook-f fa-2x"></a>
 				<a href="" class="addBtn fab fa-twitter fa-2x"></a>
-
 			  </div>
-
 			  <a href="" class="menu-button fas fa-plus fa-2x"></a>
-
 			</nav>
-
-			&nbsp;
+			<div class="small_menu">
+				<img src="/static/images/backBtn.png" id="backBtn" />
+				<img src="/static/images/saveBtn.png" id="saveBtn" />
+			</div>
 		</div>
+
+		{% include 'video_popup.html' %}
 
 		<script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 	</body>
