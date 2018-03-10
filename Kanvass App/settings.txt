@@ -1,0 +1,17 @@
+API Key: AIzaSyDUyxq1lFFP5dQ9wlnIdota6uTKK8zN3Lo
+ClientID: 221116015908-iu4t5o8qqtn4t8mq6naoa0v9519mtjg0.apps.googleusercontent.com
+Client Secret: a19ohc2Jp7V76qeevxawiHZB
+
+C:\Python34\python "H:\Interdisciplinary Team Project\google drive auth\app.py"
+
+C:\Python34\Scripts\pip install flask
+C:\Python34\Scripts\pip install flask-pymongo
+C:\Python34\Scripts\pip install Flask-Session
+
+References:
+https://developers.google.com/drive/v3/web/quickstart/python
+
+https://drive.google.com/uc?export=view&id=AF1QipN3448PQxMKUx2Ia-Ia08PkTjT-egxpkyE592_U
+
+To test APIs:
+apigee.com

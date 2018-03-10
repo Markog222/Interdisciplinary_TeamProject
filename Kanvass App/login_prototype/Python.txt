@@ -1,0 +1,5 @@
+C:\Python34\Scripts\pip install flask
+C:\Python34\Scripts\pip install flask-pymongo
+C:\Python34\Scripts\pip install flask-bcrypt
+C:\Python34\python App.py
+
