@@ -1,1 +1,1 @@
-# Interdisciplinary_TeamProject
+# Interdisciplinary Team Project
