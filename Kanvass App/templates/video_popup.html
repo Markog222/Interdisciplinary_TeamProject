@@ -1,40 +1,36 @@
-<div style="position:absolute; width:100%;height:100%;background:black;opacity:0.5; z-index:9998; display:none;" id="vid_back">
+<div style="position:absolute; top:0px;left:0px; width:100%;height:100%;background:black;opacity:0.5; z-index:9998; display:none;" id="vid_back">
 </div>
 
-<div style="position:absolute; top:40%; left:40%; padding:20px;display:none; background:white; border-radius:15px;z-index:9999;opacity:1;" id="video_popup">
-  <table>
-    <tr>
-      <td>
-          <label for="src_youtube">Frome Youtube </label><input type="radio" name="vid_source_type" id="src_youtube" checked="checked" />
-      </td>
-      <td>
-         <input type="text" placeholder="URL" id="youtube_url" /></label>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label for="src_vimeo">From Vimeo </label><input type="radio" name="vid_source_type" id="src_vimeo" />
-      </td>
-      <td>
-        <input type="text" placeholder="URL" id="vimeo_url" /></label>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label for="src_gdrive">From Google Drive</label>
-      </td>
-      <td>
-        <input type="radio" name="vid_source_type" id="src_gdrive" /></label>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <button id="vidYes">Confirm</button>
-      </td>
-      <td>
-        <button id="vidNo">Cancel</button>
-      </td>
-    </tr>
-    <tr><td id="error_out"></td></tr>
-  </table>
+<div style="position:absolute; top:40%; left:40%; width:350px; padding:30px;display:none; background:white; border-radius:15px;z-index:9999;opacity:1;" id="video_popup">
+     <legend class="text-left">Select A Video Source</legend>
+     <div class="form-group">
+       <select id="video_dropdown">
+         <optgroup>
+          <option id="vid_default">Video Source</option>
+        </optgroup>
+        <optgroup label="---------">
+          <option>Youtube</option>
+          <option>Vimeo</option>
+          </optgroup>
+          <optgroup label="---------">
+          <option>Google Drive</option>
+        </optgroup>
+        </select>
+     </div>
+     <div class="form-group has-float-label" style="display:none" id="video_url_div">
+        <input class="form-control" name="url" type="text" placeholder="URL" id="video_url" />
+        <label for="url">URL</label>
+     </div>
+     <div>
+       <div class="btn-group btn-group-justified">
+         <a href="#" class="btn btn-primary" id="vidYes">Add Video</a>
+         <a href="#" class="btn btn-danger" id="vidNo">Cancel</a>
+       </div>
+     </div>
+    <div style="display:none;">
+      YT <input type="radio" name="vid_source_type" id="src_youtube" />
+      VM <input type="radio" name="vid_source_type" id="src_vimeo" />
+      GD <input type="radio" name="vid_source_type" id="src_google_drive" />
+    </div>
+    <div id="error_out" style="display:none;"></div>
 </div>

@@ -36,13 +36,18 @@
 		<script type="text/javascript" src="/static/js/googleAPIs.js"></script>
 		<script type="text/javascript" src="/static/js/save.js"></script>
 		<script type="text/javascript" src="/static/js/create.js"></script>
-
+		<script type="text/javascript" src="/static/js/edit.js"></script>
 
 		<link rel="stylesheet" href="/static/stylesheets/styles.css">
 		<link rel="stylesheet" href="/static/stylesheets/radial.css">
 		<script>
-			var $count =0;
-		</script>
+      var $data =  '{{ data }}';
+      var patt = /&#34;/g
+      var amp = /&amp;/g
+      var $view = JSON.parse($data.replace(patt,'"').replace(amp,'&'))
+			var $count = $view.widgets.length	;
+      //var d =   JSON.parse($data.replace('&#34;','""'))
+    </script>
 	</head>
 	<body>
 

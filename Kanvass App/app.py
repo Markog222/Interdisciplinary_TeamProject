@@ -26,7 +26,20 @@ def kid():
 def index():
     if 'username' in session:
         new_id=kid()
-        return render_template('home.html',k_id=new_id)
+        kans=getAllKans()
+        shared=allSharedKans()
+        d={}
+        d['k_id']=new_id
+        kan_list=[]
+        shared_list=[]
+        for kan in kans:
+            kan_list.append(kan['kid'])
+        d['kans']=kan_list
+        for share in shared:
+            shared_list.append(share['kid'])
+        d['shared']=shared_list
+        dJson=json.dumps(d)
+        return render_template('home.html',data=dJson)
 
     return render_template('index.html')
 
@@ -71,6 +84,7 @@ def create():
 
 	return render_template('index.html')
 
+
 @app.route('/save', methods=['POST'])
 def save():
     widgets=json.loads(request.data)['widgets']
@@ -81,20 +95,69 @@ def save():
 @app.route('/delWidget',methods=['POST'])
 def delWidget():
     data=json.loads(request.data)['delWidget']
-    print(wid)
     widgetsDb=mongo.db.widgets
     widgetsDb.delete_one({"kid":wid[0]['kid'],"kid":wid[0]['wid']})
 
     return True
+
+@app.route('/view')
+def view():
+
+    if 'username' in session:
+        k_id=request.args.get('k')
+        kDb=mongo.db.kanvasses
+        wDb=mongo.db.widgets
+        kanvass=kDb.find_one({'kid':k_id})
+        widgets=wDb.find({'kid':k_id})
+        d={}
+        kanvass.pop('_id',None)
+        d['kan']=kanvass
+        widget_list=[]
+        for item in widgets:
+            item.pop('_id',None)
+            widget_list.append(item)
+
+        d['widgets']=widget_list
+        d=json.dumps(d)
+
+        return render_template('view.html',data=d)
+
+    return render_template('index.html')
+
+@app.route('/edit')
+def edit():
+
+    if 'username' in session:
+        k_id=request.args.get('k')
+        kDb=mongo.db.kanvasses
+        wDb=mongo.db.widgets
+        kanvass=kDb.find_one({'kid':k_id})
+        widgets=wDb.find({'kid':k_id})
+        d={}
+        kanvass.pop('_id',None)
+        d['kan']=kanvass
+        widget_list=[]
+        for item in widgets:
+            item.pop('_id',None)
+            widget_list.append(item)
+
+        d['widgets']=widget_list
+        d=json.dumps(d)
+
+        return render_template('edit.html',data=d)
+
+    return render_template('index.html')
 
 # Update writing to DB with bulk_write for better performance later
 def saveKanvass(data):
     kanDB=mongo.db.kanvasses
     check=kanDB.count({"kid":data[0]['kid']})
     if check==0:
+        print(data)
         kanDB.insert({
             "kid":data[0]['kid'],
             "owner":session['username'],
+            "heading":data[0]['heading'],
             "shared":0,
             "shareid":0,
             "sharedwith":[],
@@ -102,7 +165,9 @@ def saveKanvass(data):
         })
     else:
         kanDB.find_one_and_replace({"kid":data[0]['kid']},{
+            "kid":data[0]['kid'],
             "owner":session['username'],
+            "heading":data[0]['heading'],
             "shared":0,
             "shareid":0,
             "sharedwith":[],
@@ -130,6 +195,8 @@ def insertWidgets(data):
         else:
             widDb.find_one_and_replace({"kid":widget['kid'],
             "wid":widget['wid']},{
+                "kid":widget['kid'],
+                "wid":widget['wid'],
                 "type":widget['type'],
                 "style":widget['style'],
                 "pos":widget['pos'],
@@ -138,6 +205,16 @@ def insertWidgets(data):
                 "link":widget['link']
             })
     return 'true'
+
+def getAllKans():
+    kDb=mongo.db.kanvasses
+    kans=kDb.find({"owner":session['username']})
+    return kans
+
+def allSharedKans():
+    kDB=mongo.db.kanvasses
+    shared=kDB.find({"sharedwith": session['username']})
+    return shared
 
 app.secret_key = 'mysecret'
 app.run(debug=True)

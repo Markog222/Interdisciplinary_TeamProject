@@ -1,4 +1,4 @@
-.kan-thumbnail {
+.kan-thumbnail-edit, .kan-thumbnail-shared {
 
   width:200px;
   height:200px;
@@ -14,7 +14,7 @@
   line-height: 10;
 }
 
-.kan-thumbnail:hover {
+.kan-thumbnail-edit:hover, .kan-thumbnail-shared:hover {
 
   width:200px;
   height:200px;
@@ -33,7 +33,7 @@
 
 }
 
-.kan-thumbnail h4 {
+.kan-thumbnail-edit h4,.kan-thumbnail-shared h4 {
   line-height: 10;
 
 }
@@ -52,7 +52,7 @@
   cursor: pointer;
 }
 
-#kan-thumbs {
+#kan-thumbs-edit,#kan-thumbs-shared {
   margin:0px
   padding:0px;
 }

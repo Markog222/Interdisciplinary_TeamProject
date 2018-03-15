@@ -1,0 +1,31 @@
+<div style="position:absolute; top:40%; left:40%; width:350px; padding:30px;display:none; background:white; border-radius:15px;z-index:9999;opacity:1;" id="chart_popup">
+     <legend class="text-left">Select Chart Settings</legend>
+     <div class="form-group">
+       <label for="chart_type">Chart Type</label>
+       <select name="chart_type" id="chart_type_dropdown">
+         <optgroup>
+          <option value="bar">Bar Chart</option>
+          <option value="line">Line Chart</option>
+          <option value="pie">Pie Chart</option>
+        </optgroup>
+        </select>
+        <br /><br />
+        <label for="chart_source_dropdown">Data Source</label>
+        <select name="chart_source_dropdown" id="chart_source_dropdown">
+          <optgroup>
+           <option selected>From PC</option>
+           <option>From API</option>
+           </optgroup>
+         </select>
+           <button class="fas fa-upload fa-lg" id="upload_chartpicker"> <input type="file" id="upload_chartpickerBtn" accept=".csv" /></button>
+           <i class="fas fa-link fa-lg" style="display:none" id="link_chartpicker"></i>
+           <i class="fas fa-link fa-lg" style="display:none" id="gdrive_chartpicker"></i>
+     </div>
+     <div>
+       <div class="btn-group btn-group-justified">
+         <a href="#" class="btn btn-primary" id="chartYes">Add Video</a>
+         <a href="#" class="btn btn-danger" id="chartNo">Cancel</a>
+       </div>
+     </div>
+    <div id="error_out" style="display:none;"></div>
+</div>

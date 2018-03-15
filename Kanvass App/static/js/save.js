@@ -1,8 +1,10 @@
 function saveAll(){
 
-    var $k_id =window.location.href.replace("http://localhost:5000/create?id=","");
+    var $k_id =window.location.href.replace("http://localhost:5000/create?id=","").replace('http://localhost:5000/edit?k=','').replace('#','');
     var $widgets=$('.new_div');
-    //var $w_id=0;
+    var $heading = $('#kan_heading').val();
+    console.log($heading =='');
+
     var $data = {
       "widgets":[]
     };
@@ -24,6 +26,7 @@ function saveAll(){
 
       $tmp.kid = $k_id;
       $tmp.wid = $w_id;
+      $tmp.heading = $heading;
       $tmp.type = $type;
       $tmp.height = $height;
       $tmp.width = $width;
@@ -37,23 +40,33 @@ function saveAll(){
       */
       $children.each(function(){
         if($(this)[0].src !== undefined){
-          var $link = $(this)[0].src;
-          $tmp.link = $link
+          $tmp.link = $(this)[0].src;
         }
       });
 
-      $data.widgets.push($tmp);
-    });
+        if($tmp.link == undefined){
+          $tmp.link = null;
+        }
 
-    if($data.widgets[0] !== undefined){
+        $data.widgets.push($tmp);
+    });
+    console.log($data.widgets)
+
+    if($data.widgets[0] !== undefined && $heading !== 'asdasd'){
+      $('#loading').css('display','inline-block');
+      console.log('sending')
       $.ajax({
         type:"POST",
         contentType:"application/javascript",
         url:"/save",
-        data:JSON.stringify($data)
-      }).done(function(response){
-        console.log(response);
+        data:JSON.stringify($data),
+        success: widgetSaved
+      })
+
+      function widgetSaved(response){
+        $('#loading').hide();
         $saved = 1;
-      });
+      }
+
     }
 }

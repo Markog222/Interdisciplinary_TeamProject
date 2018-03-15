@@ -21,7 +21,7 @@
   display:inline-block;
 }
 
-#del_icon {
+.del_icon {
   height: 16px;
   width: 16px;
   cursor: pointer;
