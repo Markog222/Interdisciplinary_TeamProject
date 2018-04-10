@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="padding: 3rem 1rem">
+   <form name = reset_pass class="well center-block" style="max-width: 35rem" method=POST action="{{ url_for('reset') }}">
+      <legend class="text-center">Reset Password</legend>	  
+      <div class="form-group has-float-label">
+         <input class="form-control" id="password" type="password" name="pass" required = "true" placeholder="••••••••"/>
+         <label for="password">Password</label>
+      </div>
+      <div class="form-group has-float-label">
+         <input class="form-control" id="password1" type="password" name="pass1" required = "true" placeholder="••••••••"/>
+         <label for="password1">Confirm Password</label>
+      </div>	  
+      <div>
+         <button class="btn btn-block btn-primary" type="submit">Reset Password</button>
+      </div>
+	  </br>
+	  	  	<div class="container-fluid" style="min-height:100%">
+			{% with messages = get_flashed_messages(category_filter=["category2"]) %}
+				{% if messages %}
+				{% for message in messages %}
+				<div class="alert alert-danger" role="alert">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+	</div>
+   </form>
+</div>
+{% endblock %}

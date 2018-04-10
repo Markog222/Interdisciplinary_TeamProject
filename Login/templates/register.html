@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="padding: 3rem 1rem">
+   <form name = register class="well center-block" style="max-width: 35rem" method=POST action="{{ url_for('register') }}">
+      <legend class="text-center">Register</legend>
+      <div class="form-group has-float-label">
+         <input class="form-control" id="fullname" type="text" name="fullname" required = "true" placeholder="Name"/>
+         <label for="fullname">Name</label>
+      </div>	  
+      <div class="form-group has-float-label">
+         <input class="form-control" id="username" type="text" name="username" required = "true" placeholder="email@kanvass.com"/>
+         <label for="username">Username</label>
+      </div>	  
+      <div class="form-group has-float-label">
+         <input class="form-control" id="password1" type="password" name="pass1" required = "true" placeholder="••••••••"/>
+         <label for="password1">Password</label>
+      </div>
+      <div class="form-group has-float-label">
+         <input class="form-control" id="password" type="password" name="pass" required = "true" placeholder="••••••••"/>
+         <label for="password">Confirm Password</label>
+      </div>
+		<div class="form-group">
+            <select class="form-control form-control-lg" id="securityQ" name = "securityQ" required = "true">
+				<option value = "" disabled selected>Security Question</option>
+                <option value = "1">Your first pet's name</option>
+                <option value = "2">Your Mothers Maiden name</option>
+                <option value = "3">Your Favourite Restauraunt</option>
+                <option value = "4">Your Favourite colour</option>
+            </select>
+        </div>
+	   <div class="form-group has-float-label">
+         <input class="form-control" id="securityA" type="text" name="securityA" required = "true" placeholder="Security Answer"/>
+         <label for="securityA">Security Answer</label>
+      </div>
+      <div>
+         <button class="btn btn-block btn-primary" type="submit">Register</button>
+      </div>
+	  </br>
+	  	  	<div class="container-fluid" style="min-height:100%">
+			{% with messages = get_flashed_messages(category_filter=["category2"]) %}
+				{% if messages %}
+				{% for message in messages %}
+				<div class="alert alert-danger" role="alert">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+	</div>
+   </form>
+</div>
+{% endblock %}
