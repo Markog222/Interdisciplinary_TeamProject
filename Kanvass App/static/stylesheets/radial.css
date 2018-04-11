@@ -1,9 +1,9 @@
 .circular-menu {
-  z-index:9997;
+
   width: 350px;
-  height: 350px;
   position: relative;
-  /*margin: -160px;*/
+  z-index:2;
+  height: 350px;
   margin: 50px auto 0;
   margin-top:-160px;
 }
@@ -11,15 +11,14 @@
 .circular-menu a {
   color: #333;
   text-decoration: none;
-  z-index:9997;
+  z-index:2;
 }
 
 .circle {
-
+  z-index:10;
   width: 350px;
   height: 350px;
   opacity: 0;
-  z-index:9997;
 
   -webkit-transform: scale(0);
   -moz-transform: scale(0);
@@ -32,10 +31,11 @@
 
 .open.circle {
   opacity: 1;
-
+  z-index:2;
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   -transform: scale(1);
+
 }
 
 .circle a {
@@ -81,3 +81,17 @@
   Success Icon: https://commons.wikimedia.org/wiki/File:Antu_task-complete.svg
 
 */
+
+/* Div overlay to manager the menu */
+#m_icon {
+  height:40px;
+  width:70px;
+  background:red;
+  opacity:0;
+  position:fixed;
+  top:0px;
+  margin:0px;
+  padding:0px;
+  left:50%;
+  z-index:9999;
+}

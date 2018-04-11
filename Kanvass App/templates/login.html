@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="padding: 3rem 1rem">
+   <form class="well center-block" style="max-width: 35rem" method=POST action="/loginprocess">
+      <legend class="text-center">Login</legend>
+      <div class="form-group has-float-label">
+         <input class="form-control" id="username" type="text" name="username" required = "true" placeholder="Username"/>
+         <label for="username">Username</label>
+      </div>
+      <div class="form-group has-float-label">
+         <input class="form-control" id="password" type="password" name="pass" required = "true" placeholder="••••••••"/>
+         <label for="password">Password</label>
+      </div>
+      <div>
+         <button class="btn btn-block btn-primary" type="submit">Login</button>
+      </div>
+	  </br>
+	  <div class="text-center">
+	  <a href="{{ url_for('forgot_pass') }}">Forgot Password</a>
+	  </div>
+	  </br>
+	  	  	<div class="container-fluid" style="min-height:100%">
+			{% with messages = get_flashed_messages(category_filter=["category2"]) %}
+				{% if messages %}
+				{% for message in messages %}
+				<div class="alert alert-danger" role="alert">
+				{{ message }}
+				</div>
+				{% endfor %}
+				{% endif %}
+			{% endwith %}
+		</div>
+   </form>
+     <div class="text-center">
+      Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a>
+	  </div>
+</div>
+{% endblock %}

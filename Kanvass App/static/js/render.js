@@ -41,7 +41,7 @@ function viewSlides(el){
 
 function backBtn(){
   $('#backBtn').click(function(){
-    window.location.href='/'
+    window.location.href='/login'
   })
 }
 

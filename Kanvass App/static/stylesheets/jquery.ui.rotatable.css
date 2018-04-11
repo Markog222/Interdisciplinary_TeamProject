@@ -32,3 +32,81 @@
   bottom: 2px;
   display:inline-block;
 }
+
+/* @reference: https://en.m.wikipedia.org/wiki/File:Black_check.svg */
+.font_conf{
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-image: url(font_conf.png);
+  background-size: 100%;
+  left: 18px;
+  bottom: 2px;
+  display:inline-block;
+}
+
+/* @reference: https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Toicon-icon-lines-and-angles-edit.svg/32px-Toicon-icon-lines-and-angles-edit.svg.png */
+.font_edit {
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-image: url(font_edit.png);
+  background-size: 100%;
+  left: 18px;
+  bottom: 2px;
+  display:inline-block;
+  padding:4px;
+}
+
+.font_bold {
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-image: url(bold.png);
+  background-size: 100%;
+  background-size: 100%;
+  left: 18px;
+  bottom: 2px;
+  display:inline-block;
+}
+
+.font_type{
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-image: url(font_type.png);
+  background-size: 100%;
+  background-size: 100%;
+  left: 18px;
+  bottom: 2px;
+  display:inline-block;
+}
+
+.font_size_minus{
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-image: url(font_size_minus.png);
+  background-size: 100%;
+  background-size: 100%;
+  left: 18px;
+  bottom: 2px;
+  display:inline-block;
+}
+
+.font_size_plus{
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-image: url(font_size_plus.png);
+  background-size: 100%;
+  background-size: 100%;
+  left: 18px;
+  bottom: 2px;
+  display:inline-block;
+}
+
+
+textarea {
+  background:transparent;
+}

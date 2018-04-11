@@ -4,12 +4,45 @@
 <html lang="en">
   <head>
     <title>Kanvass Home</title>
-    <link href="/static/stylesheets/home.css" type="stylesheets" />
+    <link rel="stylesheet" href="/static/stylesheets/styles.css">
+    <link rel="stylesheet" href="/static/stylesheets/home.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
       $(document).ready(function(){
+        var $data =  '{{ data }}';
+        var patt = /&#34;/g
+        var amp = /&amp;/g
+        var $d = JSON.parse($data.replace(patt,'"').replace(amp,'&'))
+        //List created items
+
+        //List shared items
+        console.log($d.kans[0])
+        for(i=0;i<$d.kans.length;i++){
+          var $el=$('<li class="kan-thumbnail-edit" data-kan-id="'+$d.kans[i]+'"><h4>Shared Kanvass #'+$d.kans[i]+'</h4></li>')
+          $('#kan-thumbs-edit').append($el);
+        }
+        if($d.kans.length < 6) {
+            $('#kan-thumbs-edit').append('<li class="kan-thumbnail-add"></li>');
+        }
+
+
+        for(j=0;j<$d.shared.length;j++){
+          var $el=$('<li class="kan-thumbnail-shared" data-kan-id="'+$d.shared[j]+'"><h4>Shared Kanvass #'+$d.shared[j]+'</h4></li>')
+          $('#kan-thumbs-shared').append($el);
+        }
+
           $('.kan-thumbnail-add').click(function(){
-              window.location.href="/create?id={{ k_id }}";
+              window.location.href="/create?id="+$d.k_id;
+          })
+
+          $('.kan-thumbnail-edit').click(function(){
+              window.location.href="/edit?k="+$(this).attr('data-kan-id');
+          })
+
+          $('.kan-thumbnail-shared').click(function(e){
+            var $el = e.currentTarget.getAttribute('data-kan-id');
+            window.location.href="/view?k="+$el;
           })
       })
     </script>
@@ -19,14 +52,26 @@
       <div class="header">
         <nav>
           <ul class="nav nav-pills pull-right">
-            {% if not 'username' in session %}
-            <li role="presentation" class="active"data-toggle="modal" data-target="#myModal"><a href="{{ url_for('index') }}">Login</a></a></li>
+          <!--  {% if not 'id' in session %}
+                <li role="presentation" class="active"data-toggle="modal" data-target="#myModal"><a href="{{ url_for('index') }}">Login</a></a></li>
             {% else %}
-            <li role="presentation" class="active"><a href="">My Account</a></li>
-            <li role="presentation" class="active"><a href="{{ url_for('logout') }}">Logout</a></li>
-			<li role="presentation" class="active"><a href="{{ url_for('reset') }}">Reset Password</a></li>
+                <li role="presentation" class="active"><a href="{{ url_for('myaccount') }}">My Account</a></li>
+                <li role="presentation" class="active"><a href="{{ url_for('logout') }}">Logout</a></li>
+          			<li role="presentation" class="active"><a href="{{ url_for('reset') }}">Reset Password</a></li>
+          			<li role="presentation" class="active"><a href="{{ url_for('export') }}">Export</a></li>
             {% endif %}
-          </ul>
+          </ul>-->
+          <div class="dropdown" id="master_menu">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Account
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="/myaccount">Account Details</a></li>
+              <li><a href="/reset">Reset Password</a></li>
+              <li><a href="/export">Export</a></li>
+              <li class="divider"></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+          </div>
         </nav>
       </div>
     </div>
@@ -40,21 +85,24 @@
             @reference: https://pixabay.com/en/button-add-icon-web-symbol-304224/
           -->
           <h3>My Kanvasses</h3>
-          <ul id="kan-thumbs">
-            <li class="kan-thumbnail"><h4>Kanvass #1</h4></li>
-            <li class="kan-thumbnail"><h4>Kanvass #2</h4></li>
-            <li class="kan-thumbnail"><h4>Kanvass #3</h4></li>
-            <li class="kan-thumbnail-add"></li>
+
+          <ul id="kan-thumbs-edit">
+
+            <!--<li class="kan-thumbnail-edit"><h4>Kanvass #1</h4></li>
+            <li class="kan-thumbnail-edit"><h4>Kanvass #3</h4></li>
+            <li class="kan-thumbnail-edit"><h4>Kanvass #2</h4></li>
+            <li class="kan-thumbnail-add"></li>-->
           </ul>
         </div>
         <div class="col-lg-6 pull-left">
           <h3>Shared Kanvasses</h3>
-          <li class="kan-thumbnail"><h4>Shared Kanvass #1</h4></li>
-          <li class="kan-thumbnail"><h4>Shared Kanvass #2</h4></li>
-
+          <ul id="kan-thumbs-shared">
+            <!--<li class="kan-thumbnail-shared"><h4>Shared Kanvass #1</h4></li>
+            <li class="kan-thumbnail-shared"><h4>Shared Kanvass #2</h4></li>-->
+          </ul>
         </div>
       </div>
     </div>
-</body>
+  </body>
 </html>
 {% endblock %}

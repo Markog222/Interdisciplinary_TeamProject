@@ -6,15 +6,17 @@
 		<!-- jQuery & jQuery UI libraries -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 		<!-- Popper.js needed for Bootstrap dropdows -->
 		<script src="/static/js/popper.min.js"></script>
+
 		<!-- Bootstrap Libraries -->
 		<link href="/static/css/bootstrap.css" rel="stylesheet" />
 	  <link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v3.0.1/dist/bootstrap-float-label.min.css"/>
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
-		<!-- CSS -->
+		<!-- 3rd Party CSS files -->
 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="/static/stylesheets/jquery.ui.rotatable.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -25,19 +27,23 @@
 
 		<!-- Load Google APIs -->
 		<script src="https://apis.google.com/js/api.js"></script>
-
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<!-- Jquery Rotatable Script -->
 		<script src="/static/js/jquery.ui.rotatable.min.js"></script>
 
 		<!-- Custom Javascripts -->
+		<script type="text/javascript" src="/static/js/general.js"></script>
 		<script type="text/javascript" src="/static/js/popups.js"></script>
 		<script type="text/javascript" src="/static/js/widgets.js"></script>
 		<script type="text/javascript" src="/static/js/chart.js"></script>
 		<script type="text/javascript" src="/static/js/googleAPIs.js"></script>
 		<script type="text/javascript" src="/static/js/save.js"></script>
+		<script type="text/javascript" src="/static/js/placers.js"></script>
 		<script type="text/javascript" src="/static/js/create.js"></script>
 		<script type="text/javascript" src="/static/js/edit.js"></script>
 
+		<!-- Custom Stylesheets -->
 		<link rel="stylesheet" href="/static/stylesheets/styles.css">
 		<link rel="stylesheet" href="/static/stylesheets/radial.css">
 		<script>
@@ -53,11 +59,6 @@
 
 			<!--<button id="addBtn">Add</button>-->
 			<!-- reference:  http://creative-punch.net/2014/02/making-animated-radial-menu-css3-javascript/ -->
-
-			<!--
-					Buttons from creative commons - free for commerical use and no attribution required
-					@reference:  https://pixabay.com/en/icon-pack-package-icons-to-save-2129743/
-			-->
 
 			<nav class="circular-menu">
 
@@ -81,12 +82,10 @@
 			  <a href="#" class="menu-button fas fa-plus fa-2x"></a>
 			</nav>
 			<div class="small_menu">
-				<!--<img src="/static/images/backBtn.png" id="backBtn" />
-				<img src="/static/images/saveBtn.png" id="saveBtn" />
-				<img src="/static/images/menuBtn.png" id="menuBtn" />-->
 				<i class="fas fa-arrow-left fa-2x" id="backBtn"></i>
 				<i class="fas fa-cog fa-2x" id="settingsBtn"></i>
 				<i class="fas fa-save fa-2x" id="saveBtn"></i>
+				<i class="fas fa-share-square fa-2x" id="shareBtn"></i>
 				<input type="text" placeholder="Untitled Kanvass" id="kan_heading" />
 
 				<div id="loading">
@@ -94,12 +93,14 @@
 				</div>
 			</div>
 
-		<div id="kanvass">
-		</div>
+		<div id="kanvass"></div>
+		<div id="m_icon"></div>
 
 		{% include 'video_popup.html' %}
 		{% include 'settings_popup.html' %}
 		{% include 'chart_popup.html' %}
+		{% include 'text_popup.html' %}
+		{% include 'share_popup.html' %}
 
 		<script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 	</body>

@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="/login">Head home</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+<div style="padding: 3rem 1rem">
+   <form class="form-inline center-block" style="max-width: 35rem" method=POST action="{{ url_for('myaccount') }}">
+      <legend class="text-center">My Account</legend>
+	        <div class="form-group mb-2">
+	  	  {% for users_1 in user if user.name == user.name%}
+		{% if loop.index <= 1 %}
+			<h4>Current name : {{user.fullname}}</h4>
+         <input class="form-control" id="fullname" type="text" name="fullname" placeholder="New name"/>
+			<button type="submit" name = "submit" class="btn btn-primary mb-2" value = "changeName">Change name</button>
+		 					{% endif %}
+					{% endfor %}
+      </div>
+	  </br>
+	  </br>
+      <div class="form-group mb-2">
+	  	  {% for users_1 in user if user.name == user.name%}
+		{% if loop.index <= 1 %}
+			<h4>Current Username : {{user.name}}</h4>
+         <input class="form-control" id="username" type="text" name="username" placeholder="New Username"/>
+			<button type="submit" name ="submit" class="btn btn-primary mb-2" value = "changeuser">Change Username</button>
+		 					{% endif %}
+					{% endfor %}
+      </div>
+	  </br>
+	  </br>
+	  </br>
+	  <div>
+         <a class="btn btn-block btn-primary" href="{{ url_for('reset') }}">Reset Password</a>
+      </div>
+	  </br>
+      <div>
+         <a class="btn btn-block btn-danger" href="{{ url_for('delete_acc') }}">Delete Account</a>
+      </div>
+	  </br>
+	  </br>
+	  	  	<div class="container-fluid" style="min-height:100%">
+			{% with messages = get_flashed_messages(category_filter=["category2"]) %}
+				{% if messages %}
+				{% for message in messages %}
+				<div class="alert alert-success" role="alert">
+				{{ message }}
+				</div>
+				{% endfor %}
+				{% endif %}
+			{% endwith %}
+		</div>
+   </form>
+</div>
+{% endblock %}

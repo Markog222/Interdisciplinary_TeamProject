@@ -1,0 +1,53 @@
+<div style="position:absolute; top:40%; left:40%; width:350px; padding:30px;display:none; background:white; border-radius:15px;z-index:9999;opacity:1;" id="text_popup">
+     <legend class="text-left">Select Text Settings</legend>
+     <div class="form-group">
+       <label for="text_popup_input">Text</label>
+       <br />
+       <textarea id="text_popup_input" placeholder="Please enter some text..."></textarea>
+       <br />
+        <label for="chart_type">FontSize</label>
+        <input type="range" min="6" max="120" value="10" class="slider" id="fontsize">
+        <br />
+        <label for="font_family_dropdown">Font </label>
+        <select name="font_family_dropdown" id="font_family_dropdown">
+          <optgroup>
+              <option>Helvetica</option><option>Arial</option><option>Times</option>
+              <option>Times New Roman</option><option>Courier</option><option>Courier New</option>
+              <option>Verdana</option><option>Tahoma</option><option>Arial Black</option>
+              <option>Comic Sans MS</option><option>Avant Garde</option><option>Georgia</option>
+              <option>Palatino</option><option>Bookman</option><option>Garamond</option>
+              <option>Century Schoolbook</option><option>Andale Mono</option>
+           </optgroup>
+         </select>
+         <br />
+         <label for="font_weight_dropdown">Text Weight </label>
+         <select name="font_weight_dropdown" id="font_weight_dropdown" width="100%">
+           <optgroup>
+              <option>Normal</option>
+              <option>Lighter</option>
+              <option>Bold</option>
+            </optgroup>
+          </select>
+          <br />
+          <label for="font_style_dropdown">Text Style </label>
+          <select name="font_style_dropdown" id="font_style_dropdown" width="100%">
+            <optgroup>
+                <option>None</option>
+                <option>Underline</option>
+                <option>Line-Through</option>
+                <option>Overline</option>
+                <option>Underline Overline</option>
+            </optgroup>
+           </select>
+           <br />
+           <span class="col_lbl">Text </span><input type="color" name="font_color_picker" id="font_color_picker" />
+           <span class="col_lbl">Back </span> <input type="color" name="back_color_picker" value="#FFFFFF" id="back_color_picker" />
+     </div>
+     <div>
+       <div class="btn-group btn-group-justified">
+         <a href="#" class="btn btn-primary" id="textYes">Confirm</a>
+         <a href="#" class="btn btn-danger" id="textNo">Cancel</a>
+       </div>
+     </div>
+    <div id="error_out_text" style="display:none;"></div>
+</div>

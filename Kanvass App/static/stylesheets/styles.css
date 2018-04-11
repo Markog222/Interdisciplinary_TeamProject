@@ -13,8 +13,9 @@ body{
 	height:100%;
 	margin:0px;
 	padding:0px;
+	background:transparent;
 	/*border:1px solid gray;*/
-	z-index: 0;
+	z-index: 3
 	/*background:#f0ead6;
 	border:1px solid gray;*/
 
@@ -124,15 +125,99 @@ body{
 	font-size:110%;
 }
 
+.ui-autocomplete { position: absolute; cursor: default;z-index:9999 !important;}
+
+#shared_with {
+	border:1px solid lightgray;
+	display:none;
+	padding:5px
+}
+
+.shared_delete {
+	border:0px solid black;
+	background: transparent;
+
+}
+.shared_lbl {
+	background:#a2c7dd;
+	border-radius: 5px;
+	display:inline-block;
+	padding:2px;
+	margin:0px;
+	margin-right:2px;
+	margin-bottom:2px;
+}
+.form-group.mb-2  {
+	width:100%
+}
+
+#master_menu {
+	margin-top:5px;
+}
+
+.form-group.mb-2 input {
+	width:55%;
+}
+
+.form-group.mb-2 button {
+	width:43%;
+}
+
+#text_popup_input {
+	height:100px;
+	width:100%;
+}
+#text_popup {
+	margin-top:-150px;
+	height:auto;
+}
+#share_popup{
+	height:auto;
+	margin-top:-105px;
+}
+#share_with {
+	width:100%;
+}
+
+#font_color_picker,#back_color_picker, #font_color_picker_lbl,#back_color_picker_lbl {
+	width:20%;
+	display: inline-block;
+}
+
+#text_popup label {
+	width: 40%;
+}
+
+#text_popup select {
+	width: 55%;
+}
+.text_color_picker_lbl {
+	width:20%;
+}
+
+#font_color_picker,#back_color_picker {
+	width:20%;
+	display: inline-block;
+}
+
+#font_color_picker {
+	margin-right:14%;
+}
+.col_lbl {
+	width:20%;
+	display: inline-block;
+}
+
+
 #loading {
 	display:none;
 }
 
 #kan_heading {
-	position:fixed;
+	position:absolute;
 	padding:2px;
-	top:11px;
-	left:120px;
+	top:2px;
+	left:145px;
 	font-size:16px;
 	border-radius:2px;
 	border: 0px solid gray;
@@ -144,4 +229,13 @@ body{
 }
 #kan_heading:focus{
 	background:#FFF;
+}
+
+.text_edit, .text_create{
+	margin-bottom:5px;
+	user-select: text;
+}
+
+.rot {
+	transform: rotate(0rad);
 }

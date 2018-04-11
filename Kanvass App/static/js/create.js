@@ -11,151 +11,96 @@ var $start_pos;
 function widgetSettings(el,pos){
 
 	var $new = $(el);
-	console.log("Position: "+$pos)
+	console.log($new.attr('data-kan-type'))
 	var $pos = pos;
 
 	$new.css($pos);
 	$new.resizable();
-	//$new.resizable({alsoResize:'.new_div iframe'});
 	$new.draggable();
 	$new.rotatable({wheelRotate:false});
-	$new.append("<div id='drag_icon'></div>")
-	$new.append("<div class='del_icon'></div>")
-	//$new.css('height','auto');
-	//$new.css('width','auto');
+	$new.append("<div id='drag_icon'></div>");
+	$new.append("<div class='del_icon'></div>");
+
 	$('#kanvass').append($new);
+
+
 	$('#new_div').remove();
-	$('#kanvass').off();
-	$(document).off();
-	radialBtn();
+	$('body').off();
+	$('body').css('cursor','default');
+	menuActions();
 	delButton();
 
 }
 
 var $saved = 0;
-
-function drawChart(el, pos) {
-		var $target =el;
-	  var $new_chart=$('<div id="tmp_chart" style="display:none;"></div>')
-		$('#kanvass').append($new_chart);
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
-
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night','max-width':150,'max-height':100};
-
-        // Instantiate and draw our chart, passing in some options.
-				var $tmp=$('#tmp_chart');
-				console.log($tmp);
-        var $chart = new google.visualization.PieChart($tmp[0]);
-				$chart.draw(data, options);
-				$chart.style="height:100%;width:100%";
-
-				$target.append($('#tmp_chart').removeAttr('id').css('display','block'))
-				$('#tmp_chart').remove();
-
-				$target.css($('#new_div').position())
-				$target.attr('data-kan-type','chart');
-				$target.attr('data-kan-wid',$count);
-				widgetSettings($target, $('#new_div').position());
-}
-
-function Test(){
-	console.log("test");
-}
+var isDragging,dragStart,dCount=0;
+var lastX, lastY;
+var $div;
+$('body').css('cursor','crosshair');
 
 function addNew(type, url){
-	console.log(url);
-	var $div = $('<div id="new_div">&#43;</div>');
-	$div.css($start_pos);
-	var $src = url;
-	$('#kanvass').append($div);
-	$('.addBtn').off();
-
-	$(document).on('mousemove', function(e){
-		$('#new_div').css({
-		   left:  e.pageX-200,
-		   top:   e.pageY-150
-		});
-		console.log($('#new_div').position())
-	});
-
-	$('#kanvass').click(()=>{
-		console.log("click Kanvas")
-		try{
-			$count++;
-			var $pos=$('#new_div').position();
-
-			var $new = $('<div class="new_div" data-kan-wid='+$count+'></div>');
-			if(type=='youtube') {
-				$new = youtube($src,$new);
-				widgetSettings($new, $pos);
-			} else if (type=='vimeo'){
-				$new = vimeo($src,$new);
-				widgetSettings($new, $pos);
-			} else if (type=='image'){
-				$new = picture($src,$new);
-				widgetSettings($new, $pos);
-			} else if(type=='slide'){
-				$new = slide($src,$new);
-				widgetSettings($new, $pos);
-			} else if(type=='text'){
-
-			} else if(type=='chart'){
-				//$new.css($pos);
-				//$new=$('#kanvass').append($new);
-				drawChart($new, $pos);
-			}
-
-		} catch(e) {
-			console.log(e);
-		}
-	})
+		fixedPlacer(type, url);
 }
 
-/*
- * @reference: http://creative-punch.net/2014/02/making-animated-radial-menu-css3-javascript/
- */
-
 function radialM(){
+	//moving the div overlay over the menu button
+	$('#m_icon').css({'margin-left':'-38px','cursor':'pointer'});
+
+	//Because the radial menu is so big and needs to be in the foreground when adding new widgets
+	//It was ultimately on top of every element between top 0px and 350px
+	//In order to fix it we added an invisible div overlay at the point where the menu button is
+	//which pushes the circular-menu div in the front when mouseover
+	//And pushes it back to the back when mousout and circular menu is not open
+	$('#m_icon').mouseover(function(){
+
+		$('.circular-menu').css({'position':'relative','z-index':9999});
+		console.log($('.circular-menu'))
+	}).mouseout(function(){
+		if(!$('.circle').hasClass('open')){
+			$('.circular-menu').css('z-index',0);
+		}
+		//$('.circular-menu').css('z-index',0);
+	})
 	/*
 	 * @reference: http://creative-punch.net/2014/02/making-animated-radial-menu-css3-javascript/
 	 */
-
-	$('.menu-button.fas.fa-plus.fa-2x').click(function(e) {
+	//$('.menu-button.fas.fa-plus.fa-2x').click(function(e) {
+	$('#m_icon').click(function(e){
 			   e.preventDefault();
-			   $('.circle').toggleClass('open');
-				var items = document.querySelectorAll('.circle a');
+				 if($('.circle').hasClass('open')){
+					 $('.circular-menu').css({'position':'relative','z-index':0});
+				 } else {
+					 $('.circular-menu').css({'position':'relative','z-index':9999});
+				 }
 
+				 $('.circle').toggleClass('open');
+
+				var items = document.querySelectorAll('.circle a');
 				for(var i = 0, l = items.length; i < l; i++) {
 				  items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
 				  items[i].style.top = (50 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
 				}
-
-			})
-
-
+			});
 }
 
-function radialBtn(){
+//Adding functionality to the radial button menu
+function menuActions(){
 
 	$('.addBtn').click(function(e){
+		//Prevent Default otherwise clicking the addBtn will reload the page
 		e.preventDefault();
+		//Set the starting position of your new widget div where your mouse is at the moment
+		//To allow for a smoother transition. Otherwise the div will appear at the top of the screen and
+		//Then abruptly jump to where your mouse is at.
 		$start_pos={
 		   left:  e.pageX-200,
 		   top:   e.pageY-150
 		}
 
+		//Getting the class from the clicked button to get the type of widget to be added
 		var $class = $(this).attr('class');
+
+
 		if($class.indexOf('video') !== -1){
 
 				$('#video_popup').fadeIn();
@@ -180,21 +125,12 @@ function radialBtn(){
 			//addNew('chart',null);
 		} else if ($class.indexOf('font') !== -1){
 			//$google_type = 'slide';
+			addNew('text','text');
 		}
 		$('.circle').toggleClass('open');
+		$('.circular-menu').css('z-index',1);
+		$('.menu-button.fas.fa-plus.fa-2x').css('z-index',9999);
 	})
-
-}
-
-function smallMenu(){
-
-		$('#backBtn').click(function(){
-			window.location.href = '/';
-		})
-
-		$('#saveBtn').click(function(){
-			saveAll();
-		})
 
 }
 
@@ -215,6 +151,7 @@ function settings(){
 		$('#vid_back').fadeIn();
 		settingsPopFunctionality();
 		$('#setYes').click(settingsTrigger);
+		$('#setDel').click(deleteKanvass);
 		$('#setNo').click(function(){
 			$('#settings_popup').hide();
 			$('#vid_back').hide();
@@ -225,10 +162,17 @@ function settings(){
 
 $(document).ready(()=>{
 
-	//$('#addBtn').click(addNew);
+	//Function for the radial Menu button
 	radialM();
-	radialBtn();
+	//Function for the individual radial Menu buttons
+	menuActions();
+	//Function to add functionality
 	smallMenu();
+	//Function to add functionality
 	heading();
+  //Function to add functionality
 	settings();
+
+	rotateBtn()
+
 })

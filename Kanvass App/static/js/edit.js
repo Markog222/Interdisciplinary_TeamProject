@@ -1,9 +1,10 @@
 function delButton(){
 
 	$('.del_icon').click(function(e){
+//		console.log(e)
 		e.preventDefault();
 		var $par = e.currentTarget.parentNode;
-		var $kid=window.location.href.replace("http://localhost:5000/create?id=","");
+		var $kid=window.location.href.replace("http://localhost:5000/edit?id=","");
 		var $wid=$par.getAttribute('data-kan-wid');
 		$par.remove();
 
@@ -32,16 +33,24 @@ function delButton(){
 
 function applySettings(child,parent,el) {
   //target.children(1).attr('src','http://www.google.com');
-  console.log(el.pos['top'])
+//  console.log(el.pos['top'])
   var $parent = parent;
   $parent.attr('style',el.style);
-  console.log(el.style);
+//  console.log(el.style);
   var m = el.style.match(/[(].+[)]/g);
-  console.log(m)
+//  console.log(m)
   var $child = child;
   $child.css('height','100%');
   $child.css('width','100%');
-  $child[0].src = el.link;
+	//if()
+//	console.log($parent);
+	if($parent.attr('data-kan-type')=='text'){
+		$child.attr('style',el.textstyle)
+		$child[0].innerText = el.link;
+	} else {
+		$child[0].src = el.link;
+	}
+	// console.log($child);
   $parent.append($child);
 
 
@@ -51,10 +60,14 @@ function applySettings(child,parent,el) {
   $parent.resizable();
 	$parent.draggable();
   $parent.rotatable({wheelRotate:false});
-  $parent.css('transform','rotate'+m[0])
+  $parent.css('transform','rotate'+m[0]);
   $parent.css({'top':el.pos['top']+'px','left':el.pos['left']+'px','height':el.height+'px','width':el.width+'px'});
 
   $('#kanvass').append($parent);
+	$('.text_edit').dblclick(function(e){
+//		console.log(e)
+		editText(e)
+	})
 }
 
 function viewYoutube(el,dv){
@@ -62,7 +75,7 @@ function viewYoutube(el,dv){
     //console.log($div)
     var $widget = $('<iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
     $div.attr('data-kan-type','youtube');
-    console.log($widget);
+//    console.log($widget);
     applySettings($widget,$div,el);
 
 }
@@ -76,7 +89,7 @@ function viewVimeo(el,dv){
 
 function viewImage(el,dv){
   var $div = dv;
-  var $widget = $('<img />')
+  var $widget = $('<img style="width:100%;height:100%;" />')
   $div.attr('data-kan-type','image');
   applySettings($widget,$div,el);
 }
@@ -88,15 +101,24 @@ function viewSlides(el,dv){
   applySettings($widget,$div,el);
 }
 
+function viewText(el,dv){
+  var $div = dv;
+  var $widget = $('<div class="text_edit"></div>');
+  $div.attr('data-kan-type','text');
+  applySettings($widget,$div,el);
+}
+
 function backBtn(){
   $('#backBtn').click(function(){
-    window.location.href='/'
+    window.location.href='/login'
   })
 }
 
 
 $(document).ready(function(){
-  console.log($view.widgets)
+	console.log('Kanvass Data')
+  console.log($view.kan['heading'])
+	$('#kan_heading').val($view.kan['heading']);
   for(i=0;i<$view.widgets.length;i++){
     var $div =$('<div class="new_div" data-kan-wid="'+$view.widgets[i].wid+'"></div>');
     if($view.widgets[i].type == 'youtube'){
@@ -107,9 +129,13 @@ $(document).ready(function(){
       viewImage($view.widgets[i],$div);
     } else if($view.widgets[i].type == 'slide'){
       viewSlides($view.widgets[i],$div);
-    }
+    } else if($view.widgets[i].type == 'text'){
+			viewText($view.widgets[i],$div);
+		}
 
     backBtn();
+		delButton();
+		rotateBtn();
 
   }
 })
