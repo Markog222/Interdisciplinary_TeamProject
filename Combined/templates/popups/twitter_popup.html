@@ -1,0 +1,37 @@
+<div style="position:absolute; top:40%; left:40%; width:350px; padding:30px;display:none; background:white; border-radius:15px;z-index:9999;opacity:1;" id="twitter_popup">
+     <legend class="text-left">Select A Twitter Source</legend>
+     <div class="form-group">
+       <select id="twitter_dropdown">
+          <optgroup>
+              <option id="twitter_default">Twitter Source</option>
+          </optgroup>
+          <optgroup label="---------">
+              <option>Twitter Widget</option>
+              <option>Twitter Post</option>
+          </optgroup>
+      </select>
+     </div>
+     <div class="form-group has-float-label" style="display:none" id="twitter_widget_div">
+        <input class="form-control" name="widgetid" type="text" placeholder="Widget ID" id="twitter_widgetid" />
+        <label for="widgetid">Widget ID</label>
+     </div>
+     <div class="form-group has-float-label" style="display:none" id="twitter_widget_div2">
+        <input class="form-control" name="hash" type="text" placeholder="Hashtag" id="twitter_hashtag" />
+        <label for="hash">Hashtag</label>
+    </div>
+     <div class="form-group has-float-label" style="display:none" id="twitter_post_div">
+        <input class="form-control" name="postid" type="text" placeholder="Post ID" id="twitter_postid" />
+        <label for="postid">Post ID</label>
+     </div>
+     <div>
+       <div class="btn-group btn-group-justified">
+         <a href="#" class="btn btn-primary" id="twitterYes">Add</a>
+         <a href="#" class="btn btn-danger" id="twitterNo">Cancel</a>
+       </div>
+     </div>
+    <div style="display:none;">
+      TW <input type="radio" name="twitter_source_type" id="src_twitter_widget" />
+      TP <input type="radio" name="twitter_source_type" id="src_twitter_post" />
+    </div>
+    <div id="error_out_twitter" style="display:none;"></div>
+</div>

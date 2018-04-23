@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chop, Change and Do</title>
+
+		<!-- jQuery & jQuery UI libraries -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<!-- Popper.js needed for Bootstrap dropdows -->
+		<script src="/static/js/popper.min.js"></script>
+		<!-- Bootstrap Libraries -->
+		<link href="/static/css/bootstrap.css" rel="stylesheet" />
+	  <link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v3.0.1/dist/bootstrap-float-label.min.css"/>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+
+		<!-- CSS -->
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="/static/stylesheets/jquery.ui.rotatable.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+		<!-- Font Awesome Hosted Library -->
+    <!-- <script src="https://use.fontawesome.com/53ca39bee0.js"></script>-->
+		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+		<!-- Load Google APIs -->
+		<script src="https://apis.google.com/js/api.js"></script>
+
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script src="/static/js/jquery.ui.rotatable.min.js"></script>
+
+		<!-- Chart.js library -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
+		<!-- Custom Javascripts -->
+		<!--
+    <script type="text/javascript" src="/static/js/popups.js"></script>
+		<script type="text/javascript" src="/static/js/widgets.js"></script>
+		<script type="text/javascript" src="/static/js/chart.js"></script>
+		<script type="text/javascript" src="/static/js/googleAPIs.js"></script>
+		<script type="text/javascript" src="/static/js/save.js"></script>
+		<script type="text/javascript" src="/static/js/create.js"></script>-->
+    <script type="text/javascript" src="/static/js/render.js"></script>
+    <script>
+      var $data =  '{{ data }}';
+      var patt = /&#34;/g
+      var amp = /&amp;/g
+      var $view = JSON.parse($data.replace(patt,'"').replace(amp,'&'))
+      //var d =   JSON.parse($data.replace('&#34;','""'))
+    </script>
+		<link rel="stylesheet" href="/static/stylesheets/styles.css">
+		<link rel="stylesheet" href="/static/stylesheets/radial.css">
+		<script>
+
+		</script>
+	</head>
+	<body>
+
+			<!--<button id="addBtn">Add</button>-->
+			<!-- reference:  http://creative-punch.net/2014/02/making-animated-radial-menu-css3-javascript/ -->
+
+			<!--
+					Buttons from creative commons - free for commerical use and no attribution required
+					@reference:  https://pixabay.com/en/icon-pack-package-icons-to-save-2129743/
+			-->
+
+			<div class="small_menu">
+				<i class="fas fa-arrow-left fa-2x" id="backBtn"></i>
+				<!-- Add header here -->
+				<div id="loading">
+					<img src="/static/images/load_icon.gif" style="height:30px;width:30px;" />
+				</div>
+			</div>
+
+		<div id="kanvass">
+		</div>
+
+		<!--<script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>-->
+	</body>
+</html>

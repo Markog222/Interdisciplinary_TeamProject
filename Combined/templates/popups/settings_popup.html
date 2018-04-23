@@ -1,0 +1,30 @@
+<div style="position:absolute; top:40%; left:40%; width:350px; padding:30px;display:none; background:white; border-radius:15px;z-index:9999;opacity:1;" id="settings_popup">
+     <legend class="text-left">Settings</legend>
+     <div class="form-group">
+       <label for="backround">Background</label>
+       <select name="background" id="background_dropdown">
+          <optgroup>
+           <option id="back_default_setting" selected>Color</option>
+            <option>Image</option>
+          </optgroup>
+        </select>
+        <input type="color" value="#FFFFFF" id="background_colorpicker" />
+        <i class="fas fa-link fa-lg" style="display:none" id="background_imglinkpicker"></i>
+        <i class="fab fa-google-drive fa-lg" style="display:none" id="background_imggdrivepicker"></i>
+        <br />
+
+     </div>
+     <div>
+       <div class="btn-group btn-group-justified">
+         <a href="#" class="btn btn-primary" id="setYes">Confirm</a>
+         <a href="#" class="btn btn-danger" id="setNo">Cancel</a>
+         <a href="#" class="btn btn-warning" id="setDel">Delete</a>
+       </div>
+     </div>
+    <div style="display:none;">
+      YT <input type="radio" name="vid_source_type" id="src_youtube" />
+      VM <input type="radio" name="vid_source_type" id="src_vimeo" />
+      GD <input type="radio" name="vid_source_type" id="src_google_drive" />
+    </div>
+    <div id="error_out" style="display:none;"></div>
+</div>
