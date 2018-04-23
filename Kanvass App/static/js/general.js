@@ -1,6 +1,4 @@
 var $text_edit = 0;
-
-
 //rotationInfo function from Stackoverflow to normalize rotated position
 //Otherwise the rotated divs would move further to the top with every saved edit
 //@reference: https://stackoverflow.com/questions/8270612/get-element-moz-transformrotate-value-in-jquery
@@ -22,12 +20,11 @@ $.fn.rotationInfo = function() {
 
 //Assigns function to the menu items on the top left
 function smallMenu(){
-
 		$('#backBtn').click(function(){
 			window.location.href = '/login';
 		})
-
 		$('#saveBtn').click(function(){
+
 			saveAll();
 		})
 		$('#shareBtn').click(function(){
@@ -37,57 +34,97 @@ function smallMenu(){
 
 function doKanvass(type, url) {
   $('#kanvass').off();
-
+  console.log(url)
 try{
-  $count++;
-  var $pos=$('#new_div').position();
-  var $h = $('#new_div').height();
-  var $w = $('#new_div').width();
-  var $src = url;
-  var $new = $('<div class="new_div" data-kan-wid='+$count+'></div>');
-  $new.css({'height':$h+'px','width':$w+'px'})
-  if(type=='youtube') {
-    $new = youtube($src,$new);
-    widgetSettings($new, $pos);
-  } else if (type=='vimeo'){
-    $new = vimeo($src,$new);
-    widgetSettings($new, $pos);
-  } else if (type=='image'){
-    $new = picture($src,$new);
-    widgetSettings($new, $pos);
-  } else if(type=='slide'){
-    $new = slide($src,$new);
-    widgetSettings($new, $pos);
-  } else if(type=='text'){
+    $count++;
+    var $pos=$('#new_div').position();
+    var $h = $('#new_div').height();
+    var $w = $('#new_div').width();
+    var $src = url;
+    console.log($src)
+    var $new = $('<div class="new_div" data-kan-wid='+$count+'></div>');
+    $new.css({'height':$h+'px','width':$w+'px'})
 
-      $('#vid_back').fadeIn();
-      $('#text_popup').fadeIn();
-      textBind();
-      $('#textYes').click(function(){
-        resetTextPopup();
-        $('.text_create').addClass('text_edit').removeClass('text_create');
-        $('.text_edit').dblclick(function(e){
-            $text_edit=1;
-            editText(e);
-        });
-      });
-      $('#textNo').click(function(){
-        resetTextPopup();
-      })
+    if(type=='youtube') {
 
-      $new=text("Please enter some text...",$new);
-      widgetSettings($new, $pos)
+        $new = youtube($src,$new);
+        widgetSettings($new, $pos);
 
-  } else if(type.indexOf('_chart') > -1){
-    var $cc = $('#header_row').prop('checked');
-    $('#header_row').prop('checked',true);
-    drawChart($new, url, $cc, $pos, type);
-  }
+    } else if (type=='vimeo'){
+
+        $new = vimeo($src,$new);
+        widgetSettings($new, $pos);
+
+    } else if (type=='image'){
+
+        $new = picture($src,$new);
+        widgetSettings($new, $pos);
+
+    } else if(type=='slide'){
+
+        $new = slide($src,$new);
+        widgetSettings($new, $pos);
+
+    } else if(type=='text'){
+
+        textPopFunctionality();
+        $new=text("Please enter some text...",$new);
+        widgetSettings($new, $pos)
+
+    } else if(type.indexOf('_chart') != -1){
+
+        var $cc = $('#header_row').prop('checked');
+        $('#header_row').prop('checked',true);
+        drawChart($new, url, $cc, $pos, type);
+
+    } else if(type == 'twitter_widget'){
+
+        $new =  twitter($src[0], $src[1], $new);
+        widgetSettings($new, $pos);
+
+    } else if(type == 'twitter_post'){
+
+      var $i = $('<iframe src="https://twitter.com/EmerHigginsCllr/status/988077743169556481" width="400px" height="500px" frameborder="1"></iframe>');
+      $('#kanvass').append($i);
+      widgetSettings($new, $pos);
+
+    }
 
   } catch(e) {
     console.log(e);
   }
 }
+
+function resizeButton(){
+
+	$('.resize_icon').click(function(e){
+    console.log('hey')
+		e.preventDefault();
+		var $par = $(e.currentTarget.parentNode);
+    console.log($par)
+    var $type = $par.attr('data-kan-type');
+    if($type.indexOf('chart') > -1){
+      var $ct=0;
+      $par.children().each(function(){
+        //console.log($(this))
+        if($ct==1){
+          console.log('resize')
+
+          resizeFunctionality($(this),$(this).height(), $(this).width())
+        }
+        $ct++;
+      })
+    } else if($type.indexOf('twitter') > -1){
+        console.log($par.children()[0])
+        resizeFunctionality($($par.children()[0]),$par.height()-3, $par.width()-3)
+    } else {
+      console.log("yeeeeeasdasd")
+      resizeFunctionality($($par.children()[0]),$par.height(), $par.width())
+    }
+  });
+}
+
+
 
 
 function delButton(){
@@ -95,7 +132,9 @@ function delButton(){
 	$('.del_icon').click(function(e){
 		e.preventDefault();
 		var $par = e.currentTarget.parentNode;
-		var $kid=window.location.href.replace("http://localhost:5000/create?id=","");
+    var $p =/(?!.*[=])([0-9])/g
+		//var $kid=window.location.href.replace("http://localhost:5000/create?id=","");
+    var $kid = window.location.href.match($p,"")[0];
 		var $wid=$par.getAttribute('data-kan-wid');
 		$par.remove();
 
@@ -107,13 +146,17 @@ function delButton(){
 			"kid":$kid,
 			"wid":$wid
 		});
+    console.log($data.delWidget);
 
 		if($saved == 1){
 			$.ajax({
 				type:"POST",
 				url:"/delWidget",
 				data:JSON.stringify($data),
-				contentType:"application/javascript"
+				contentType:"application/javascript",
+        failure:function(err){
+          console.log(err)
+        }
 			}).done(function(res){
 				console.log(res);
 			})
@@ -207,16 +250,36 @@ var $shared = null;
 function removeShared(e){
   e.preventDefault();
   var $el = $(e.currentTarget.parentNode);
+  var $p =/(?!.*[=])([0-9])/g
+  var $kid = window.location.href.match($p,"")[0];
+  var $unshareid=$el.attr('data-kan-value');
+  var data = {'kid':$kid,'unshareid':$unshareid};
   $el.remove();
   if($('#shared_with').text()==''){
     $('#shared_with').hide();
   }
+
+  $.ajax({
+    'url':'/unshare',
+    'type':'POST',
+    'contentType':'application/json',
+    'data':JSON.stringify(data),
+    success:function(res){
+      console.log(res);
+    }
+  })
+
 }
 
 function getUsers(){
+  var $p =/(?!.*[=])([0-9])/g
+  var $kid = window.location.href.match($p,"")[0];
+  $('#shared_with').html('');
   $.ajax({
       'url':'/sharePPL',
-      'type':'GET',
+      'type':'POST',
+      'contentType':'application/json',
+      'data':$kid,
       success:function(res){
         var d=JSON.parse(res);
         var $source = [];
@@ -226,48 +289,90 @@ function getUsers(){
           $d.label = d.source[i].f;
           $source.push($d);
         }
+        var $sharedwith=d.sharedwith;
 
-        //$('#share_with').autocomplete({'source':['jQuery','JavaScript','Node.js']});
-        $('#share_with').autocomplete({'source':$source, 'select': function (event, ui) {
-            var label = ui.item.label;
-            var value = ui.item.value;
-           //store in session
-          //document.valueSelectedForAutocomplete = value;
+        for(j=0;j<$sharedwith.length;j++){
+          var $el=$('<span class="btn btn-primary" style="padding:3px;margin-left:2px;margin-bottom:2px;" data-kan-value='+$sharedwith[j].id+'>'
+          +$sharedwith[j].f+' <span class=badge onclick="removeShared(event)">x</badge> </span>')
+          $('#shared_with').append($el);
+        }
+        if($sharedwith.length > 0){
           $('#shared_with').show();
+        }
 
-          var $item = $('<span class="shared_lbl" value='+value+'>'+label+' <button class="shared_delete" onclick="removeShared(event)">x</button></span>')
-          $('#shared_with').append($item);
-          event.preventDefault();
-          $('#share_with').val('')
-          console.log(value)
-          console.log(label)
+        //Adding user names to autocomplete
+        function autoComplete(src){
+          $('#share_with').autocomplete({'source':src,
+            'select': function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
 
-        }});
+                $('#shared_with').show();
+                var $item = $('<span class="btn btn-primary" style="padding:3px;margin-left:2px;margin-bottom:2px;" data-kan-value='+value+'>'+label+' <span class=badge onclick="removeShared(event)">x</badge> </span>')
+
+                $('#shared_with').append($item);
+                event.preventDefault();
+                $('#share_with').val('');
+                var $tmp_source=[];
+                for(i=src.length-1;i>=0;i--){
+                    if(src[i].value !== ui.item.value){
+                        $tmp_source.push(src[i]);
+                    }
+                }
+                $('#share_with').autocomplete('destroy');
+                autoComplete($tmp_source);
+            }
+          });
+        }
+        autoComplete($source);
       },
       failure:function(err){
         console.log(err)
       }
     })
 
-
-
-
 }
 
 function share(){
 
+  var $sharedPPL = [];
   getUsers();
-
   $('#share_popup').fadeIn();
   $('#vid_back').fadeIn();
   //settingsPopFunctionality();
   $('#shareYes').click(function(){
+    $('#shareYes').off();
+      var $child = $('#shared_with').children();
+      $child.each(function(){
+          $sharedPPL.push(Number($(this).attr('data-kan-value')));
+      })
 
-  });
-  $('#shareNo').click(function(){
-    $('#shared_with').html('').hide();
-    $('#share_popup').hide();
-    $('#vid_back').hide();
-    //resetVideoPopup();
+      var $p =/(?!.*[=])([0-9])/g
+      var $kid = window.location.href.match($p,"")[0];
+      var $data = JSON.stringify({"kid":$kid,"data":$sharedPPL});
+
+      $.ajax({
+        url:'/share',
+        type:'POST',
+        data:$data,
+				contentType:"application/javascript",
+        success:function(res){
+            showErr("#error_out_share","Shared successfully.","green");
+
+        },
+        failure:function(err){
+            showErr("#error_out_share","An unexpected error occurred! Your Kanvass could not be shared. Please reload the page and contact customer support if the issue persists.","red");
+        }
+      });
+
   })
+    $('#shareNo').click(function(){
+      $('#shareYes').off();
+      $('#share_with').val('');
+      $('#error_out_share').hide();
+      $('#shared_with').hide();
+      $('#share_popup').hide();
+      $('#vid_back').hide();
+      //resetVideoPopup();
+    })
 }

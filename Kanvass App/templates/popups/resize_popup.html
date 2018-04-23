@@ -1,0 +1,20 @@
+<div style="position:absolute; top:40%; left:40%; width:350px; padding:30px;display:none; background:white; border-radius:15px;z-index:9999;opacity:1;" id="resize_popup">
+     <legend class="text-left">Resize</legend>
+     <div class="form-group">
+        <label for="resize_height">Height</label>
+        <input type="range" name="resize_height" min="50" max="2000" value="10" class="slider" id="resize_height">
+        <br />
+        <label for="resize_width">Width</label>
+        <input type="range" name="resize_width" min="50" max="2000" value="10" class="slider" id="resize_width">
+        <br />
+        <input type="checkbox" name="aspect_ratio" id="aspect_ratio" checked>
+        <label for="aspect_ratio">Keep Aspect Ratio</label>
+     </div>
+     <div>
+       <div class="btn-group btn-group-justified">
+         <a href="#" class="btn btn-primary" id="resizeYes">Confirm</a>
+         <a href="#" class="btn btn-danger" id="resizeNo">Cancel</a>
+       </div>
+     </div>
+    <div id="error_out_resize" style="display:none;"></div>
+</div>

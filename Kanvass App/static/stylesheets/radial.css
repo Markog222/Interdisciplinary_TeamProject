@@ -6,10 +6,11 @@
   height: 350px;
   margin: 50px auto 0;
   margin-top:-160px;
+  color:#428bca;
 }
 
 .circular-menu a {
-  color: #333;
+  color: #428bca;
   text-decoration: none;
   z-index:2;
 }
@@ -35,17 +36,18 @@
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   -transform: scale(1);
+  background:url(radial_back.png);
 
 }
 
 .circle a {
   text-decoration: none;
-  color: black;
+  color: #428bca;
   display: block;
-  height: 50px;
-  width: 50px;
+  height: 30px;
+  width: 30px;
  /*  line-height: 40px; */
-  margin-left: -20px;
+  margin-left: -15px;
   margin-top: -20px;
   position: absolute;
   text-align: center;
@@ -53,7 +55,7 @@
 }
 
 .circle a:hover {
-  color: gray;
+  color: #d9534f;
 }
 
 .menu-button, .menu-button:hover {

@@ -92,12 +92,18 @@
 <div id="kanvass"></div>
 <div id="m_icon"></div>
 
-		{% include 'video_popup.html' %}
-		{% include 'settings_popup.html' %}
-		{% include 'chart_popup.html' %}
-		{% include 'text_popup.html' %}
-		{% include 'share_popup.html' %}
+		{% include 'popups/video_popup.html' %}
+		{% include 'popups/image_popup.html' %}
+		{% include 'popups/chart_popup.html' %}
+
+		{% include 'popups/twitter_popup.html' %}
+		{% include 'popups/resize_popup.html' %}
+
+		{% include 'popups/settings_popup.html' %}
+		{% include 'popups/text_popup.html' %}
+		{% include 'popups/share_popup.html' %}
 
 		<script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+		<script async src="/static/js/twitter-widgets.js" charset="utf-8"></script>
 	</body>
 </html>

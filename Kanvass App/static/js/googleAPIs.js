@@ -23,7 +23,7 @@
 
       function onAuthApiLoad() {
         //var authBtn = document.getElementById('auth');
-        var imgBtn = document.getElementById('imageBtn');
+        var imgBtn = document.getElementById('driveimage');
         var slideBtn = document.getElementById('slideBtn');
         console.log(slideBtn);
         slideBtn.disabled = false;
@@ -161,7 +161,8 @@
       if($google_type == 'image'){
 		    url = "https://drive.google.com/uc?export=view&id="+fileId;
       } else {
-        url = 'https://docs.google.com/presentation/d/'+fileId+'/preview?start=true&loop=false&delayms=200'
+        //url = 'https://docs.google.com/presentation/d/'+fileId+'/preview?start=true&loop=false&delayms=200'
+        url = 'https://docs.google.com/presentation/d/'+fileId+'/preview?start=false'
       }
 		  shareFile(fileId, shareSuccess);
       addNew($google_type,url);

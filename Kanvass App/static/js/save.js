@@ -1,6 +1,9 @@
 function saveAll(){
 
-    var $k_id =window.location.href.replace("http://localhost:5000/create?id=","").replace('http://localhost:5000/edit?k=','').replace('#','');
+    //var $k_id =window.location.href.replace("http://localhost:5000/create?id=","").replace('http://localhost:5000/edit?k=','').replace('#','');
+    var $p =/(?!.*[=])([0-9])/g
+    var $k_id = window.location.href.match($p,"")[0];
+    var $cnt = 0;
     var $widgets=$('.new_div');
     var $heading = $('#kan_heading').val();
 //    console.log($heading =='');
@@ -14,8 +17,11 @@ function saveAll(){
     //  console.log($($(this).children()[0]).css('font-size'));
       var $type = $(this).attr('data-kan-type');
       var $w_id = $(this).attr('data-kan-wid');
-      var $height = Number(getComputedStyle($(this)[0]).height);
-      var $width = Number(getComputedStyle($(this)[0]).width);
+      console.log('height: '+getComputedStyle($(this).children()[0]).height.replace('px'))
+      var $height = Number(getComputedStyle($(this)[0]).height.replace('px',''));
+      var $width = Number(getComputedStyle($(this)[0]).width.replace('px',''));
+
+      console.log($height)
       //Cannot use $(this).position() because using position() on a rotated element
       //Will give you a different top and left from the originally rotated element
       //Thus we have to use getComputedStyle() which will return the top and left before rotating
@@ -32,7 +38,7 @@ function saveAll(){
       } else {
         var $res = {"viewHeight":$(window).height(), "viewWidth":$(window).width()}
       }
-
+      console.log("saving..")
       $tmp.kid = $k_id;
       $tmp.wid = $w_id;
       $tmp.heading = $heading;
@@ -43,7 +49,18 @@ function saveAll(){
       $tmp.style = $style;
       $tmp.viewSize = $res;
       $tmp.textstyle = null;
+      $tmp.sharedwith =[];
+      $tmp.chart_data = $chart_body[$cnt] == undefined || $type.indexOf('chart') == -1  ? [] : $chart_body[$cnt];
+      $tmp.twitter_data = [];
 
+      $tmp.twitter_data.push($(this).attr('data-twitter-id'),$(this).attr('data-twitter-hashtag'))
+
+      console.log($tmp.chart_data);
+
+      $('#shared_with').children().each(function(){
+        $tmp.sharedwith.push(Number($(this).attr('data-kan-value')));
+      })
+      //console.log($tmp.sharedwith)
       /*
        * @reference: https://stackoverflow.com/questions/3044230/difference-between-screen-availheight-and-window-height
        * @reference: https://stackoverflow.com/questions/2863351/checking-if-browser-is-in-fullscreen
@@ -55,7 +72,7 @@ function saveAll(){
       });
         if($type == 'text'){
           var p = /["]/g
-          console.log($($(this).children()[0]).css('font-family').replace(p,''))
+          //console.log($($(this).children()[0]).css('font-family').replace(p,''))
           $tmp.link = $($(this).children()[0]).text();
           $tmp.textstyle = 'font-size:'+$($(this).children()[0]).css('font-size')+';'
                             +'font-weight:'+$($(this).children()[0]).css('font-weight')+';'
@@ -63,7 +80,8 @@ function saveAll(){
                             + 'text-decoration:'+$($(this).children()[0]).css('text-decoration')+';'
                             + 'color:'+$($(this).children()[0]).css('color')+';'
                             + 'background-color:'+$($(this).children()[0]).css('background-color')+';';
-          console.log($tmp.textstyle)
+          //console.log($tmp.textstyle)
+
           //When getting the font from the element there can be some string elements (e.g.\,/.")
           //Which will break the code when trying to use JSON.parse, thus we remove them when saving
           //The style will still be applied and work
@@ -82,12 +100,14 @@ function saveAll(){
         }
         console.log($tmp.textstyle);
         $data.widgets.push($tmp);
+        $cnt = $type.indexOf('chart') !== -1 ? $cnt++ : $cnt;
     });
   //  console.log($data.widgets)
 
     if($data.widgets[0] !== undefined && $heading !== 'asdasd'){
       $('#loading').css('display','inline-block');
       console.log('sending')
+      console.log($data)
       $.ajax({
         type:"POST",
         contentType:"application/javascript",

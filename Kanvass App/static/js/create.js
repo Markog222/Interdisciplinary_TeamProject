@@ -15,21 +15,47 @@ function widgetSettings(el,pos){
 	var $pos = pos;
 
 	$new.css($pos);
-	$new.resizable();
+	if($new.attr('data-kan-type').indexOf('twitter') !== -1 && $new.attr('data-kan-type') !== 'chart'){
+		$new.resizable();
+	}
 	$new.draggable();
 	$new.rotatable({wheelRotate:false});
+
 	$new.append("<div id='drag_icon'></div>");
 	$new.append("<div class='del_icon'></div>");
-
+	//if($new.attr('data-kan-type').indexOf('twitter') !== -1 || $new.attr('data-kan-type') == 'chart'){
+	$new.append("<div class='resize_icon'></div>");
+	//}
 	$('#kanvass').append($new);
-
+	var $ct=0;
+	console.log("DataKanType: "+$new.attr('data-kan-type'))
+	if($new.attr('data-kan-type').indexOf('twitter') !== -1) {
+		console.log('setTimeout')
+			setTimeout(function(){
+					//console.log("starttimeout")
+					//console.log($new.children())
+					//console.log($new.children().children())
+					//$new.css({'min-width':'252px'})
+					$new.css('min-width','');
+					$new.children().each(function(){
+						//console.log($(this))
+							if($ct == 0){
+									//console.log($(this));
+									$(this).css({'height':'350px','width':'250px'})
+									$ct=1;
+									//console.log('changed size')
+							}
+					})
+					resizeButton();
+			},3000)
+	}
 
 	$('#new_div').remove();
 	$('body').off();
 	$('body').css('cursor','default');
 	menuActions();
 	delButton();
-
+	resizeButton();
 }
 
 var $saved = 0;
@@ -111,7 +137,10 @@ function menuActions(){
 					resetVideoPopup();
 				})
 		} else if ($class.indexOf('image') !== -1){
-			$google_type = 'image';
+			$('#image_popup').fadeIn();
+			$('#vid_back').fadeIn();
+			imagePopFunctionality();
+
 		} else if ($class.indexOf('slide') !== -1){
 			$google_type = 'slide';
 		} else if ($class.indexOf('chart') !== -1){
@@ -126,7 +155,12 @@ function menuActions(){
 		} else if ($class.indexOf('font') !== -1){
 			//$google_type = 'slide';
 			addNew('text','text');
+		} else if($class.indexOf('twitter') !== -1){
+			twitterPopFunctionality();
+			//addNew('twitter',null);
 		}
+
+
 		$('.circle').toggleClass('open');
 		$('.circular-menu').css('z-index',1);
 		$('.menu-button.fas.fa-plus.fa-2x').css('z-index',9999);
@@ -173,6 +207,6 @@ $(document).ready(()=>{
   //Function to add functionality
 	settings();
 
-	rotateBtn()
+	rotateBtn();
 
 })

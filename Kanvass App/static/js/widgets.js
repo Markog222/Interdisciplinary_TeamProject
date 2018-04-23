@@ -1,4 +1,5 @@
- var $google_type;
+var $google_type;
+var $chart_body =[];
 
 function youtube(url, target){
 
@@ -29,7 +30,6 @@ function picture(url, target){
 	$target.css('width','auto');
 	$target.css('height','auto');
 	var $widget = $('<img src="'+$url+'" height="100%" width="100%" />');
-
 	$target.append($widget);
 	$target.attr('data-kan-type','image');
 	return $target;
@@ -67,42 +67,177 @@ function text(text, target){
 
 }
 
-function drawChart(el, dat, header, pos, typ) {
+function twitter(id, hashtag, target){
+    var $id = id;
+    var $hash = hashtag;
+  	var $target = target;;
+  	//Test: https://docs.google.com/presentation/d/13vsbKgIg2bsd21RXIVwcjSFC6Am-vm42Z5XshNAha9I/preview?start=true&loop=false&delayms=3000
+  	var $widget = $('<a class="twitter-timeline" href="https://twitter.com/hashtag/'+$hash+'" data-widget-id="'+$id+'">#'+$hash+' Tweets</a>'
+    +'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><br />');
+  	$target.append($widget);
+  	$target.attr('data-kan-type','twitter_widget');
+		$target.attr('data-twitter-id',$id);
+		$target.attr('data-twitter-hashtag',$hash);
+  	return $target;
 
-		var $target =el;
-	  var $new_chart=$('<div id="tmp_chart" style="display:none;"></div>')
-		$('#kanvass').append($new_chart);
-        var data = new google.visualization.DataTable();
-				if(header == true) {
+}
 
-				}
+function getChartDetails(deets){
 
-				data.addColumn('string', dat[0][0]);
-        data.addColumn('number', dat[0][1]);
-				dat.splice(0,1);
-				data.addRows(dat);
+  var $details = {};
+  $details.legend = deets[0][1];
+  $details.labels=[];
+  $details.data=[];
+  $details.bgColors=[];
+  $details.borColors=[];
 
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night','max-width':$target.height()+'px','max-height':$target.width()+'px'};
+  var bgColors=['rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)','rgba(75, 192, 192, 0.2)',
+  'rgba(153, 102, 255, 0.2)','rgba(255, 159, 64, 0.2)','rgb(33, 77, 255, 0.2)','rgb(58, 0, 193, 0.2)','rgb(193, 0, 119, 0.2)',
+  'rgba(255, 159, 0, 0.2)'];
+  var borColors=['rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)',
+  'rgba(255, 159, 64, 1)','rgb(33, 77, 255, 1)','rgb(58, 0, 193, 1)','rgb(193, 0, 119, 1)','rgba(255, 159, 0, 1)'];
 
-        // Instantiate and draw our chart, passing in some options.
-				var $tmp=$('#tmp_chart');
-				console.log(typ);
-				if(typ == 'pie_chart'){
-						var $chart = new google.visualization.PieChart($tmp[0]);
-				} else if(typ == 'line_chart') {
-					 var $chart = new google.visualization.LineChart($tmp[0]);
-				} else if(typ == 'bar_chart') {
-					 var $chart = new google.visualization.BarChart($tmp[0]);
-				}
+  for(i=1;i<deets.length;i++){
+    $details.labels.push(deets[i][0]);
+    $details.data.push(deets[i][1]);
+    $details.bgColors.push(bgColors[i-1]);
+    $details.borColors.push(borColors[i-1]);
+  }
 
-				$chart.draw(data, options);
+  return $details;
+}
 
-				$target.append($('#tmp_chart').removeAttr('id').css('display','block'))
-				$('#tmp_chart').remove();
 
-				$target.css($('#new_div').position())
-				$target.attr('data-kan-type','chart');
-				$target.attr('data-kan-wid',$count);
-				widgetSettings($target, $('#new_div').position());
+function drawChart(el,dat,header,pos,typ){
+
+  var $target = el;
+
+  var $new_chart=$('<div class="chart-container new_div" style="display:none; position:absolute; width:400px;"><canvas id="tmp_chart"></canvas></div>');
+  $new_chart.attr('data-kan-type',typ);
+  $new_chart.attr('data-kan-wid',$target.attr('data-kan-wid'));
+
+  $('#kanvass').append($new_chart);
+  $new_chart.draggable();
+
+  var $chart_details = getChartDetails(dat);
+	$chart_body.push($chart_details);
+  var $chart_type = typ.replace('_chart','');
+
+  var ctx = document.getElementById('tmp_chart');
+  var chartid = 'chart_'+parseInt(Math.random()*100000);
+  ctx.setAttribute('id',chartid);
+  var myChart = new Chart(ctx, {
+    type: $chart_type,
+    data: {
+        labels: $chart_details.labels,
+        datasets: [{
+            label: $chart_details.legend,
+            data: $chart_details.data,
+            backgroundColor: $chart_details.bgColors,
+            borderColor: $chart_details.borColors,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes:[{
+              display:false
+            }]
+        },
+        legend:{
+          position:'bottom'
+        },
+        title: {
+            display: true,
+            text: 'Pizza'
+        }
+    }
+});
+
+
+  $new_chart.append('<div id="drag_icon"></div>');
+  $new_chart.append('<div class="del_icon"></div>');
+  $new_chart.append('<div class="resize_icon"></div>');
+  //$new_chart.rotatable({wheelRotate:false});
+  var $n_pos = $('#new_div').position();
+  $('#new_div').remove();
+	console.log(pos)
+	console.log($('#'+chartid).parent().css('position'))
+	var position = '{"top":,"left":}'
+	$('#'+chartid).parent().css({'top':pos.top,'left':pos.left,'display':'block'},)
+
+  $('upload_chartpickerBtn').val('');
+  menuActions();
+	delButton();
+	resizeButton();
+
+}
+
+function redrawChart(el,dat,pos,typ,style, h, w){
+
+  var $target = el;
+	var m = style.match(/[(].+[)]/g);
+  var $new_chart=$('<div class="chart-container new_div" style="display:none; position:absolute; width:400px;"><canvas id="tmp_chart"></canvas></div>');
+  $new_chart.attr('data-kan-type',typ);
+  $new_chart.attr('data-kan-wid',$target.attr('data-kan-wid'));
+
+
+  $('#kanvass').append($new_chart);
+  $new_chart.draggable();
+	console.log(dat)
+  var $chart_details = dat;
+	$chart_body.push($chart_details);
+  var $chart_type = typ.replace('_chart','');
+
+  var ctx = document.getElementById('tmp_chart');
+  var chartid = 'chart_'+parseInt(Math.random()*100000);
+  ctx.setAttribute('id',chartid);
+  var myChart = new Chart(ctx, {
+    type: $chart_type,
+    data: {
+        labels: $chart_details.labels,
+        datasets: [{
+            label: $chart_details.legend,
+            data: $chart_details.data,
+            backgroundColor: $chart_details.bgColors,
+            borderColor: $chart_details.borColors,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes:[{
+              display:false
+            }]
+        },
+        legend:{
+          position:'bottom'
+        },
+        title: {
+            display: true,
+            text: 'Pizza'
+        }
+    }
+});
+
+  $new_chart.append('<div id="drag_icon"></div>');
+  $new_chart.append('<div class="del_icon"></div>');
+  $new_chart.append('<div class="resize_icon"></div>');
+  //$new_chart.rotatable({wheelRotate:false});
+	//$new_chart.css('transform','rotate'+m[0]);
+
+	$('#'+chartid).parent().css({'top':pos.top,'left':pos.left,'display':'block','height':h+'px','width':w+'px'})
+	delButton();
+	resizeButton();
+
 }

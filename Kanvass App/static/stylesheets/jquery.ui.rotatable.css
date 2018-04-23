@@ -33,6 +33,19 @@
   display:inline-block;
 }
 
+.resize_icon {
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-image: url(resize.png);
+  background-size: 100%;
+  background-size: 100%;
+  left: 18px;
+  bottom: 2px;
+  display:inline-block;
+  cursor:pointer;
+}
+
 /* @reference: https://en.m.wikipedia.org/wiki/File:Black_check.svg */
 .font_conf{
   height: 16px;

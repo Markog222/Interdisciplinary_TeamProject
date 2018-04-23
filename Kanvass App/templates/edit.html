@@ -25,6 +25,10 @@
     <!-- <script src="https://use.fontawesome.com/53ca39bee0.js"></script>-->
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
+		<!-- Chart.js library -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
 		<!-- Load Google APIs -->
 		<script src="https://apis.google.com/js/api.js"></script>
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -50,7 +54,9 @@
       var $data =  '{{ data }}';
       var patt = /&#34;/g
       var amp = /&amp;/g
-      var $view = JSON.parse($data.replace(patt,'"').replace(amp,'&'))
+			var fwd =  /\r/g
+			var nline = /\n/g
+      var $view = JSON.parse($data.replace(patt,'"').replace(amp,'&').replace(fwd,'').replace(nline,''));
 			var $count = $view.widgets.length	;
       //var d =   JSON.parse($data.replace('&#34;','""'))
     </script>
@@ -96,11 +102,16 @@
 		<div id="kanvass"></div>
 		<div id="m_icon"></div>
 
-		{% include 'video_popup.html' %}
-		{% include 'settings_popup.html' %}
-		{% include 'chart_popup.html' %}
-		{% include 'text_popup.html' %}
-		{% include 'share_popup.html' %}
+		{% include 'popups/video_popup.html' %}
+		{% include 'popups/image_popup.html' %}
+		{% include 'popups/chart_popup.html' %}
+
+		{% include 'popups/twitter_popup.html' %}
+		{% include 'popups/resize_popup.html' %}
+
+		{% include 'popups/settings_popup.html' %}
+		{% include 'popups/text_popup.html' %}
+		{% include 'popups/share_popup.html' %}
 
 		<script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 	</body>

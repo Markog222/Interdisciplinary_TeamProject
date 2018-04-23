@@ -76,7 +76,7 @@ body{
 
 }
 
-#video_dropdown, #chart_type_dropdown {
+#video_dropdown,#img_dropdown, #chart_type_dropdown, #twitter_dropdown {
 
 	width:100%;
 	border-radius:5px;
@@ -121,7 +121,7 @@ body{
 	color:#0080ff;
 }
 
-#video_dropdown option, #background_dropdown option, #chart_type_dropdown option, #chart_source_dropdown option {
+#video_dropdown option,#img_dropdown option, #background_dropdown option, #chart_type_dropdown option, #chart_source_dropdown option, #twitter_dropdown option {
 	font-size:110%;
 }
 
@@ -130,7 +130,9 @@ body{
 #shared_with {
 	border:1px solid lightgray;
 	display:none;
-	padding:5px
+	padding:3px;
+	max-height:130px;
+	overflow-y:auto;
 }
 
 .shared_delete {
@@ -168,6 +170,11 @@ body{
 	width:100%;
 }
 #text_popup {
+	margin-top:-150px;
+	height:auto;
+}
+
+#img_popup {
 	margin-top:-150px;
 	height:auto;
 }
@@ -238,4 +245,14 @@ body{
 
 .rot {
 	transform: rotate(0rad);
+}
+
+iframe[id^="twitter-widget-"] {
+		width:350px;
+		height:200px;
+}
+
+#twitter-widget-0 {
+	width:350px;
+	height:200px;
 }
