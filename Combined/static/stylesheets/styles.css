@@ -1,0 +1,258 @@
+body{
+	position:absolute;
+	min-width:100%;
+	min-height:100%;
+	margin:0px;
+}
+
+#kanvass {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	margin:0px;
+	padding:0px;
+	background:transparent;
+	/*border:1px solid gray;*/
+	z-index: 3
+	/*background:#f0ead6;
+	border:1px solid gray;*/
+
+}
+
+#addBtn {
+
+	float:right;
+	margin:10px;
+
+}
+
+#new_div{
+
+	width:350px;
+	height:200px;
+	border:1px solid gray;
+	background:white;
+	opacity:0.5;
+	position:absolute;
+	text-align:center;
+	line-height:200px;
+	font-size:55px;
+	font-weight:bold;
+
+}
+
+.new_div{
+
+	width:350px;
+	height:200px;
+	padding:1px;
+	border:1px solid gray;
+	background:transparent;
+	position:absolute!important;
+
+}
+
+.ui-dialog .ui-resizable-se {
+    background-image: url("");
+}
+
+.ui-icon, .ui-widget-content .ui-icon
+   {
+      background-image : none;
+   }
+
+.small_menu {
+	position:absolute;
+	top:10px;
+	left:10px;
+	z-index:9998;
+}
+
+.small_menu i {
+	cursor:pointer;
+	margin-right:5px;
+
+}
+
+#video_dropdown,#img_dropdown, #chart_type_dropdown, #twitter_dropdown {
+
+	width:100%;
+	border-radius:5px;
+	padding:5px;
+
+}
+#background_dropdown, #chart_source_dropdown {
+	width:80%;
+	border-radius:5px;
+	padding:5px;
+	display:inline-block;
+	vertical-align: top;
+	margin:0px;
+}
+#background_colorpicker {
+	display:inline-block;
+	width:18%;
+	margin:0px;
+	padding:0px;
+	height:30px;
+	border-radius:5px;
+}
+#background_imglinkpicker, #background_imggdrivepicker, #link_chartpicker, #gdrive_chartpicker {
+	margin-top:6px;
+	margin-left:5px;
+	cursor: pointer;
+}
+#upload_chartpicker {
+	margin-top:6px;
+	margin-left:5px;
+	cursor: pointer;
+	background:transparent;
+	width:15%;
+	height:30px;
+	vertical-align: top;
+	border:0px solid white;
+}
+#upload_chartpickerBtn {
+	opacity:0;width:30px;height:30px;position:relative;top:-15px;cursor:pointer;
+}
+#background_imglinkpicker:hover, #background_imggdrivepicker:hover, #upload_chartpicker:hover, #link_chartpicker:hover, #gdrive_chartpicker:hover {
+	color:#0080ff;
+}
+
+#video_dropdown option,#img_dropdown option, #background_dropdown option, #chart_type_dropdown option, #chart_source_dropdown option, #twitter_dropdown option {
+	font-size:110%;
+}
+
+.ui-autocomplete { position: absolute; cursor: default;z-index:9999 !important;}
+
+#shared_with {
+	border:1px solid lightgray;
+	display:none;
+	padding:3px;
+	max-height:130px;
+	overflow-y:auto;
+}
+
+.shared_delete {
+	border:0px solid black;
+	background: transparent;
+
+}
+.shared_lbl {
+	background:#a2c7dd;
+	border-radius: 5px;
+	display:inline-block;
+	padding:2px;
+	margin:0px;
+	margin-right:2px;
+	margin-bottom:2px;
+}
+.form-group.mb-2  {
+	width:100%
+}
+
+#master_menu {
+	margin-top:5px;
+}
+
+.form-group.mb-2 input {
+	width:55%;
+}
+
+.form-group.mb-2 button {
+	width:43%;
+}
+
+#text_popup_input {
+	height:100px;
+	width:100%;
+}
+#text_popup {
+	margin-top:-150px;
+	height:auto;
+}
+
+#img_popup {
+	margin-top:-150px;
+	height:auto;
+}
+#share_popup{
+	height:auto;
+	margin-top:-105px;
+}
+#share_with {
+	width:100%;
+}
+
+#font_color_picker,#back_color_picker, #font_color_picker_lbl,#back_color_picker_lbl {
+	width:20%;
+	display: inline-block;
+}
+
+#text_popup label {
+	width: 40%;
+}
+
+#text_popup select {
+	width: 55%;
+}
+.text_color_picker_lbl {
+	width:20%;
+}
+
+#font_color_picker,#back_color_picker {
+	width:20%;
+	display: inline-block;
+}
+
+#font_color_picker {
+	margin-right:14%;
+}
+.col_lbl {
+	width:20%;
+	display: inline-block;
+}
+
+
+#loading {
+	display:none;
+}
+
+#kan_heading {
+	position:absolute;
+	padding:2px;
+	top:2px;
+	left:145px;
+	font-size:16px;
+	border-radius:2px;
+	border: 0px solid gray;
+	z-index:9996;
+	background:transparent;
+}
+#kan_heading:hover{
+	background:#E0E0E0;
+}
+#kan_heading:focus{
+	background:#FFF;
+}
+
+.text_edit, .text_create{
+	margin-bottom:5px;
+	user-select: text;
+}
+
+.rot {
+	transform: rotate(0rad);
+}
+
+iframe[id^="twitter-widget-"] {
+		width:350px;
+		height:200px;
+}
+
+#twitter-widget-0 {
+	width:350px;
+	height:200px;
+}
