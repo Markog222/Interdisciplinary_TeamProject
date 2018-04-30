@@ -1,0 +1,3 @@
+URL of git repository used for deployment:
+
+https://git.eu-gb.bluemix.net/x15045111/Kanvass-flask
